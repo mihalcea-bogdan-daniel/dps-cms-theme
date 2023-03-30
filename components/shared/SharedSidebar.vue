@@ -1,9 +1,9 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <div class="grid">
+  <div class="grid grid-nogutter">
     <div
       v-if="sidebarContentNode"
-      class="col-6"
+      class="col-12"
       v-html="
         sidebarContentNode.contentNode.properties['cd:formattedContent']?.value
       "

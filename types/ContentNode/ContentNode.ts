@@ -51,6 +51,7 @@ export interface ContentNode<GenericProps = CdProperties> {
   items: ContentNode[];
   totalPages: number;
   itemsCount: number;
+  hasChildren: boolean;
 }
 
 export interface ContentNodeResponse {
