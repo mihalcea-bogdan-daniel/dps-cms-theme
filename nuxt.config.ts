@@ -1,10 +1,14 @@
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
-  modules: ["@nuxtjs/i18n"],
+  modules: ["@nuxtjs/i18n", "nuxt-headlessui"],
   css: [
     "primevue/resources/themes/saga-blue/theme.css",
     "primevue/resources/primevue.css",
     "primeicons/primeicons.css",
     "primeflex/primeflex.css",
   ],
+  // Optionally change the default prefix.
+  headlessui: {
+    prefix: "Headless",
+  },
 });

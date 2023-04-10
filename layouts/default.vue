@@ -14,7 +14,7 @@
       </div>
     </header>
     <nav class="dps-navigation">
-      <!-- <Menu class="h-full" :items="menuItems"></Menu> // TODO transpus Menu -->
+      <SharedNavigationMenu class="h-full"></SharedNavigationMenu>
     </nav>
     <main class="dps-container grid grid-nogutter mb-4 mx-auto">
       <NuxtLoadingIndicator />
