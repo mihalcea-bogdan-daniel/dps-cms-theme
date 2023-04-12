@@ -5,24 +5,19 @@
       v-if="sidebarContentNode"
       class="col-12"
       v-html="
-        sidebarContentNode.contentNode.properties['cd:formattedContent']?.value
+        sidebarContentNode.properties['cd:formattedContent']?.value
       "
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ContentNodeResponse } from "~~/../types/ContentNode/ContentNode";
+import { ContentNode } from "~~/../types/ContentNode/ContentNode";
 
-const config = useRuntimeConfig();
-const { dpsCmsTheme } = useAppConfig();
-
-const { data: sidebarContentNode } = await useFetch<ContentNodeResponse>(
-  `/api/v1/web-content/${dpsCmsTheme.pageBlocksApiLocations.sidebar}`,
-  {
-    baseURL: config.public.apiBase,
-  }
-);
+interface SharedSidebarProps {
+  sidebarContentNode?: ContentNode;
+}
+defineProps<SharedSidebarProps>();
 </script>
 
 <style scoped></style>
