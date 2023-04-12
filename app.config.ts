@@ -2,17 +2,29 @@ export default defineAppConfig({
   dpsCmsTheme: {
     name: "dpsCmsTheme",
     pageBlocksApiLocations: {
-      footer: "sections/footer",
+      footer: {
+        path: "sections/footer",
+        content:"sections/footer/content",
+        copyright: "sections/footer/copyright",
+        "footer-menu": "sections/footer/footer-menu",
+      },
       sidebar: "sections/sidebar",
-      menu: "sections/header/menu",
       homepage: "sections/homepage",
       header: "sections/header",
+        menu: "sections/header/menu",
     },
   },
 });
 
+
+
 interface PageBlocksDefaultLocationConfig {
-  footer: string;
+  footer: {
+    path: string,
+    content: string,
+    copyright: string,
+    "footer-menu": string,
+  };
   sidebar: string;
   menu: string;
   homepage: string;

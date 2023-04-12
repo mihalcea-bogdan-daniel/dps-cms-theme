@@ -16,7 +16,7 @@
     <NuxtLink
       :to="childNode.path"
       class="nuxt-link-child-node p-button p-button-outlined"
-      >Mai multe...</NuxtLink
+      >{{ t("view.moreInformation") }}</NuxtLink
     >
   </div>
 </template>
