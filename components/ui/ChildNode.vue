@@ -3,7 +3,7 @@
     class="flex gap-2 align-items-end border-1 border-round-md p-2 border-primary-100 justify-content-between"
   >
     <div class="flex flex-column">
-      <div class="text-lg mb-2">
+      <div v-if="childNode.properties['cd:title']" class="text-lg mb-2">
         {{ childNode.properties["cd:title"].value }}
       </div>
       <div class="flex gap-1 font-italic">
@@ -22,7 +22,8 @@
 </template>
 
 <script setup lang="ts">
-import { ContentNode } from "~~/../types/ContentNode/ContentNode";
+import { ContentNode } from "../../types/ContentNode/ContentNode";
+
 interface ChildNodeProps {
   childNode: ContentNode;
 }
