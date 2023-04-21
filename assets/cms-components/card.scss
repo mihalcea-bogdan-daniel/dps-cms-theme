@@ -1,0 +1,15 @@
+.cms-card {
+  @apply border border-slate-400 rounded-md overflow-hidden flex flex-col;
+  &.cms-card-horizontal {
+    @apply flex-row;
+  }
+  .cms-card-title {
+    @apply  text-xl text-slate-700 p-3;
+  }
+  .cms-card-body {
+    @apply text-base pb-2 p-3;
+  }
+  .cms-card-footer {
+    @apply text-base pb-2 p-3;
+  }
+}

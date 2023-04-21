@@ -1,5 +1,5 @@
 <template>
-  <h2>{{ contentNode.properties["cd:title"].value }}</h2>
+  <h2>{{ contentNode.properties["cd:title"]?.value }}</h2>
   <div v-html="contentNode.properties['cd:description'].value"></div>
   <div class="w-full border-bottom-1 mb-4 border-primary-600"></div>
   <div class="flex flex-column gap-1">

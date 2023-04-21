@@ -12,7 +12,6 @@
   </NuxtLayout>
 </template>
 <script setup lang="ts">
-
 // const categoryChildren = computed(() => {
 //   if (contentNode.value) {
 //     return contentNode.value.contentNode.children?.filter((child) => child.primaryType === "cd:content");

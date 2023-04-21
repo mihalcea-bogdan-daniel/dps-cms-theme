@@ -1,0 +1,12 @@
+@import url(../node_modules/@egjs/vue3-flicking/dist/flicking.css);
+//Cards
+@import url(./cms-components/card.scss);
+//Inputs
+@import url(./cms-components/inputs.scss);
+
+.cms-button {
+  @apply bg-blue-600 w-fit text-slate-100 p-2 rounded-md hover:bg-blue-500 cursor-pointer active:bg-blue-800 focus:ring-2 focus:ring-blue-300;
+  &.button-sm{
+    @apply p-1 text-sm;
+  }
+}
