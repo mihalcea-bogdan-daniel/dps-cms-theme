@@ -29,7 +29,7 @@
         </div>
       </MenuButton>
       <MenuItems
-        class="absolute bg-white drop-shadow-md p-2 rounded-b-md rounded-r-md"
+        class="absolute bg-white drop-shadow-md p-2 rounded-b-md rounded-r-md flex flex-col"
         v-if="menuItem.children != undefined && menuItem.children.length > 0"
       >
         <MenuItem
@@ -63,7 +63,7 @@
           <NuxtLink
             v-else
             :to="menuSubItem.path"
-            class="p-component p-button p-button-link p-button-sm"
+            class="p-3 hover:bg-slate-100 hover:text-blue-600 rounded-md"
             >{{ menuSubItem.label }}</NuxtLink
           >
         </MenuItem>
@@ -95,35 +95,37 @@ const props = defineProps<NavigationMenuProps>();
 
 const extractMenuItems = function (contentNodes: ContentNode[]): MenuItem[] {
   const menuItems: MenuItem[] = [];
-  contentNodes.forEach((cn: ContentNode) => {
-    if (![PrimaryType.FILE, PrimaryType.RESOURCE].includes(cn.primaryType)) {
-      // level 1
-      menuItems.push({
-        label: cn.properties["cd:title"]?.value,
-        path: cn.path,
-        link: cn.path,
-        children: cn.children
-          ? cn.children
-              .filter(
-                (ch) =>
-                  ![PrimaryType.FILE, PrimaryType.RESOURCE].includes(
-                    ch.primaryType
-                  )
-              )
-              // level 2
-              .map((ch) => {
-                return {
-                  label: ch.properties["cd:title"]?.value,
-                  path: cn.path,
-                  link: cn.path,
-                  // level 3
-                  children: extractMenuItems(ch.children),
-                };
-              })
-          : [],
-      });
-    }
-  });
+  if (contentNodes) {
+    contentNodes.forEach((cn: ContentNode) => {
+      if (![PrimaryType.FILE, PrimaryType.RESOURCE].includes(cn.primaryType)) {
+        // level 1
+        menuItems.push({
+          label: cn.properties["cd:title"]?.value,
+          path: cn.path,
+          link: cn.path,
+          children: cn.children
+            ? cn.children
+                .filter(
+                  (ch) =>
+                    ![PrimaryType.FILE, PrimaryType.RESOURCE].includes(
+                      ch.primaryType
+                    )
+                )
+                // level 2
+                .map((ch) => {
+                  return {
+                    label: ch.properties["cd:title"]?.value,
+                    path: cn.path,
+                    link: cn.path,
+                    // level 3
+                    children: extractMenuItems(ch.children),
+                  };
+                })
+            : [],
+        });
+      }
+    });
+  }
   return menuItems;
 };
 const menuItems: ComputedRef<MenuItem[]> = computed(() => {
