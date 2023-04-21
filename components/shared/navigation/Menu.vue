@@ -5,7 +5,7 @@
       as="div"
       v-for="menuItem in menuItems"
       :key="menuItem.path"
-      class="h-full"
+      class="h-full z-50"
     >
       <MenuButton
         v-if="menuItem.children == undefined || menuItem.children.length == 0"
@@ -13,7 +13,7 @@
       >
         <NuxtLink
           :to="menuItem.path"
-          class="no-underline block h-full border-blue-600 hover:border-b-4"
+          class="no-underline block h-full border-blue-600 hover:border-b-4 hover:text-blue-600"
           >{{ menuItem.label }}</NuxtLink
         >
       </MenuButton>
@@ -29,7 +29,7 @@
         </div>
       </MenuButton>
       <MenuItems
-        class="absolute bg-white drop-shadow-md p-2 rounded-b-md rounded-r-md flex flex-col"
+        class="absolute bg-white drop-shadow-md p-2 rounded-b-md rounded-r-md flex flex-col outline-none"
         v-if="menuItem.children != undefined && menuItem.children.length > 0"
       >
         <MenuItem
@@ -42,7 +42,7 @@
             v-if="menuSubItem.children && menuSubItem.children?.length > 0"
             class="p-3 relative hover:bg-slate-100 rounded-md"
           >
-            <div class="flex gap-4 items-center">
+            <div class="flex gap-4 items-center justify-between">
               <div>{{ menuSubItem.label }}</div>
               <i class="fa fa-chevron-right text-xs"></i>
             </div>
@@ -78,7 +78,6 @@ import {
   ContentNode,
   PrimaryType,
 } from "../../../types/ContentNode/ContentNode";
-import SubMenu from "./SubMenu.vue";
 
 interface NavigationMenuProps {
   contentNode: ContentNode;

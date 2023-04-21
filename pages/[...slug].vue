@@ -12,27 +12,6 @@
   </NuxtLayout>
 </template>
 <script setup lang="ts">
-// const categoryChildren = computed(() => {
-//   if (contentNode.value) {
-//     return contentNode.value.contentNode.children?.filter((child) => child.primaryType === "cd:content");
-//   } else {
-//     return [];
-//   }
-// });
-// const articleChildren = computed(() => {
-//   if (contentNode.value) {
-//     return contentNode.value.contentNode.children?.filter((child) => child.primaryType === "cd:contentModule");
-//   } else {
-//     return [];
-//   }
-// });
-// const fileChildren = computed(() => {
-//   if (contentNode.value) {
-//     return contentNode.value.contentNode.children?.filter((child) => child.primaryType === "pa:file");
-//   } else {
-//     return [];
-//   }
-// });
 </script>
 
 <style scoped></style>

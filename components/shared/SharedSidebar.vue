@@ -1,14 +1,10 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <div class="grid grid-nogutter">
-    <div
-      v-if="sidebarContentNode"
-      class="col-12"
-      v-html="
-        sidebarContentNode.properties['cd:formattedContent']?.value
-      "
-    />
-  </div>
+  <div
+  class="col-span-12"
+    v-if="sidebarContentNode"
+    v-html="sidebarContentNode.properties['cd:formattedContent']?.value"
+  />
 </template>
 
 <script setup lang="ts">
