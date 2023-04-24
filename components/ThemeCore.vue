@@ -7,7 +7,9 @@
       <div v-html="contentNode.properties['cd:description'].value"></div>
     </template>
     <template #footer>
-      <NuxtLink class="cms-button" :href="contentNode.path"> {{ t("view.moreInformation") }} </NuxtLink>
+      <NuxtLink class="cms-button" :href="contentNode.path">
+        {{ t("view.moreInformation") }}
+      </NuxtLink>
     </template>
   </UiCard>
   <div v-html="contentNode.properties['cd:description'].value"></div>
@@ -32,7 +34,14 @@ const { t } = useI18n();
 interface ThemeCoreProps {
   contentNode: ContentNode;
 }
-defineProps<ThemeCoreProps>();
+const props = defineProps<ThemeCoreProps>();
+const contentNodeCategories = computed(() => {
+  if (props.contentNode) {
+
+  } else {
+    return [];
+  }
+});
 </script>
 
 <style scoped></style>
