@@ -29,7 +29,7 @@
             <li
               :class="[
                 active ? 'bg-blue-100 text-blue-900' : 'text-gray-900',
-                'relative cursor-pointer select-none py-2 pl-10 pr-4',
+                'relative cursor-pointer select-none p-2',
               ]"
             >
               <span
@@ -39,12 +39,12 @@
                 ]"
                 >{{ greaterThanSm ? loc.name : loc.shortName }}</span
               >
-              <span
+              <!-- <span
                 v-if="locale == loc.code"
                 class="absolute inset-y-0 left-0 flex items-center pl-3 text-blue-600"
               >
                 <i class="fa-light fa-check"></i>
-              </span>
+              </span> -->
             </li>
           </ListboxOption>
         </ListboxOptions>
@@ -60,19 +60,31 @@ import {
   ListboxOptions,
   ListboxOption,
 } from "@headlessui/vue";
+
 import { LocaleObject } from "@nuxtjs/i18n/dist/runtime/composables";
 import { useBreakpoints, breakpointsTailwind } from "@vueuse/core";
 
-const breakpoints = useBreakpoints(breakpointsTailwind);
-const greaterThanSm = breakpoints.greater("sm");
+const customBreakPoints = {
+  "2xl": 1440,
+  xl: 1296,
+  lg: 1024,
+  md: 768,
+  sm: 640,
+};
 
+const breakpoints = useBreakpoints(customBreakPoints);
+const greaterThanSm = breakpoints.greater("sm");
 const { locales, setLocale, locale } = useI18n();
 const availableLocales = computed(() => locales.value);
 
 const localesModelValue = computed({
   get() {
-    const currentLocaleObject = locales.value.find((loc: LocaleObject) => loc.code == locale.value)
-    return greaterThanSm.value ? currentLocaleObject?.name : currentLocaleObject?.shortName
+    const currentLocaleObject = locales.value.find(
+      (loc: LocaleObject) => loc.code == locale.value
+    );
+    return greaterThanSm.value
+      ? currentLocaleObject?.name
+      : currentLocaleObject?.shortName;
   },
   set(val) {
     setLocale(val);

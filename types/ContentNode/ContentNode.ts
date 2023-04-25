@@ -14,7 +14,8 @@ export enum PrimaryType {
   UNSTRUCTURED = "nt:unstructured",
   MO_FOLDER = "pa:moFolder",
   FILE = "pa:file",
-  RESOURCE = "pa:resource"
+  RESOURCE = "pa:resource",
+  GALLERY = "cd:gallery"
 }
 
 export interface ContentNode<GenericProps = CdProperties> {

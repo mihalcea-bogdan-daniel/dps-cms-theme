@@ -13,18 +13,20 @@
       >
         <NuxtLink
           :to="menuItem.path"
-          class="no-underline block h-full border-blue-600 hover:border-b-4 hover:text-blue-600 outline-none focus:text-blue-600"
+          class="no-underline block h-full border-primary-blue hover:border-b-4 hover:text-primary-blue outline-none focus:text-pastel-blue"
           >{{ menuItem.label }}</NuxtLink
         >
       </MenuButton>
       <MenuButton
         v-else
         as="div"
-        class="h-full border-blue-600 hover:border-b-4"
-        :class="{ 'border-b-4 text-blue-600': open }"
+        class="h-full border-primary-blue hover:border-b-4"
+        :class="{ 'border-b-4 text-primary-blue': open }"
       >
-        <div class="flex gap-3">
-          <button class="outline-none focus:text-blue-600">{{ menuItem.label }}</button>
+        <div class="flex gap-3 items-center hover:text-primary-blue">
+          <button class="outline-none focus:text-primary-blue">
+            {{ menuItem.label }}
+          </button>
           <i class="fa fa-caret-down"></i>
         </div>
       </MenuButton>
@@ -40,14 +42,17 @@
         >
           <div
             v-if="menuSubItem.children && menuSubItem.children?.length > 0"
-            class="p-3 relative hover:bg-slate-100 rounded-md"
+            class="p-2 relative hover:bg-pastel-black rounded-md"
           >
-            <div class="flex gap-4 items-center justify-between">
+            <div
+              class="flex gap-4 items-center justify-between"
+              :class="active ? 'text-primary-blue bg-pastel-black' : ''"
+            >
               <NuxtLink
-                  :href="menuSubItem.path"
-                  class="p-2 hover:bg-slate-100 hover:text-blue-600 rounded-md outline-none"
-                  :class="active ? 'text-blue-600' : ''"
-                >{{ menuSubItem.label }}</NuxtLink>
+                :href="menuSubItem.path"
+                class="p-2 rounded-md outline-none"
+                >{{ menuSubItem.label }}</NuxtLink
+              >
               <i class="fa fa-chevron-right text-xs"></i>
             </div>
             <div v-if="active">
@@ -57,9 +62,9 @@
                 <NuxtLink
                   v-for="leafItem in menuSubItem.children"
                   :href="leafItem.path"
-                  class="p-2 hover:bg-slate-100 hover:text-blue-600 rounded-md"
+                  class="p-3 hover:bg-pastel-black hover:text-primary-blue rounded-md"
                 >
-                  <span>{{ leafItem.label }}</span>
+                  <span class="text-inherit">{{ leafItem.label }}</span>
                 </NuxtLink>
               </div>
             </div>
@@ -67,22 +72,19 @@
           <NuxtLink
             v-else
             :to="menuSubItem.path"
-            class="p-3 hover:bg-slate-100 hover:text-blue-600 rounded-md"
+            class="p-3 hover:bg-pastel-black hover:text-primary-blue rounded-md"
             >{{ menuSubItem.label }}</NuxtLink
           >
         </MenuItem>
       </MenuItems>
     </Menu>
   </div>
-
 </template>
 
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-import {
-  ContentNode,
-} from "../../../types/ContentNode/ContentNode";
-import { IMenuItem, extractMenuItems } from './utils';
+import { ContentNode } from "../../../types/ContentNode/ContentNode";
+import { IMenuItem, extractMenuItems } from "./utils";
 
 interface NavigationMenuProps {
   contentNode: ContentNode;

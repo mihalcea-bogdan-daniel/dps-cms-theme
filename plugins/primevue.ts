@@ -5,7 +5,7 @@ import Carousel from "primevue/carousel";
 import Dropdown from "primevue/dropdown";
 import Portal from "primevue/image";
 import FocusTrap from "primevue/focustrap";
-import Image from "primevue/image"
+import Image from "../components/ui/CMSImage.vue"
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(PrimeVue, { ripple: true });

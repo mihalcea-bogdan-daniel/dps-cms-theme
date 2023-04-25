@@ -1,31 +1,17 @@
 <template>
-  <UiCard>
-    <template #title>
-      <h2 class="p-0">{{ contentNode.properties["cd:title"]?.value }}</h2>
-    </template>
-    <template #body>
-      <div v-html="contentNode.properties['cd:description'].value"></div>
-    </template>
-    <template #footer>
-      <NuxtLink class="cms-button" :href="contentNode.path">
-        {{ t("view.moreInformation") }}
-      </NuxtLink>
-    </template>
-  </UiCard>
-  <div v-html="contentNode.properties['cd:description'].value"></div>
-
-  <div class="flex flex-column gap-1">
-    <UiChildNode
-      v-for="ch in contentNode.children"
-      :key="ch.id"
-      :childNode="ch"
-    ></UiChildNode>
-    <template name="article"></template>
-    <template name="category"></template>
-    <template name="files"></template>
-    <template name="gallery"></template>
+  <div v-if="contentNode.children && contentNode.children.length > 0">
+    <h1 v-if="contentNode.properties['cd:title']">
+      {{ contentNode.properties["cd:title"]?.value }}
+    </h1>
+    <div class="flex flex-column gap-1">
+      <slot
+        name="categories"
+        :contentNodeCategories="contentNodeCategories"
+      ></slot>
+      <slot name="files" :contentNodeFiles="contentNodeFiles"></slot>
+      <slot name="galleries" :contentNodeGaleries="contentNodeGaleries"></slot>
+    </div>
   </div>
-  <!-- <pre>{{ contentNode }}</pre> -->
 </template>
 
 <script setup lang="ts">
@@ -37,7 +23,27 @@ interface ThemeCoreProps {
 const props = defineProps<ThemeCoreProps>();
 const contentNodeCategories = computed(() => {
   if (props.contentNode) {
-
+    return props.contentNode.children.filter((ch) => {
+      return ch.primaryType == "cd:content";
+    });
+  } else {
+    return [];
+  }
+});
+const contentNodeFiles = computed(() => {
+  if (props.contentNode) {
+    return props.contentNode.children.filter((ch) => {
+      return ch.primaryType == "pa:file" || ch.primaryType == "pa:resource";
+    });
+  } else {
+    return [];
+  }
+});
+const contentNodeGaleries = computed(() => {
+  if (props.contentNode) {
+    return props.contentNode.children.filter((ch) => {
+      return ch.primaryType == "cd:gallery";
+    });
   } else {
     return [];
   }

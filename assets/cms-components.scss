@@ -4,9 +4,12 @@
 //Inputs
 @import url(./cms-components/inputs.scss);
 
+@import url(./cms-components/typography.scss);
+
 .cms-button {
-  @apply bg-blue-600 w-fit text-slate-100 p-2 rounded-md hover:bg-blue-500 cursor-pointer active:bg-blue-800 focus:ring-2 focus:ring-blue-300;
-  &.button-sm{
+  @apply bg-primary-blue w-fit text-white p-2 rounded-md hover:bg-primary-blue cursor-pointer active:bg-primary-blue focus:ring-2 focus:ring-pastel-blue;
+
+  &.button-sm {
     @apply p-1 text-sm;
   }
 }

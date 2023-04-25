@@ -2,11 +2,15 @@
 <template>
   <NuxtLayout>
     <template v-slot="{ contentNode, pending }">
-      <div v-if="contentNode.contentNode && !pending" class="col-9">
-        <ThemeCore :contentNode="contentNode.contentNode"></ThemeCore>
+      <div v-if="!pending && contentNode" class="col-9">
+        <ThemeCore :contentNode="contentNode.contentNode">
+
+        </ThemeCore>
       </div>
       <div v-else>
-        <div>Loading resources</div>
+        <div class="animation-spin">
+        <i class="fa fa-loader"></i>
+        </div>
       </div>
     </template>
   </NuxtLayout>

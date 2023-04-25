@@ -8,7 +8,7 @@
           :key="'main-menu-mobile-button'"
           id="main-menu-mobile-button"
         >
-          <div class="flex gap-4 w-full">
+          <div class="flex gap-4 w-full items-center" :class="{'text-primary-blue':open}">
             <div>{{ t("view.menu") }}</div>
             <i class="fa" :class="open ? 'fa-times' : 'fa-bars'"></i>
           </div>
@@ -40,7 +40,7 @@
             id="main-menu-mobile-button"
             v-if="open"
             static
-            class="absolute origin-top bottom-0 left-0 transition animation-delay-150 w-full z-20 bg-white drop-shadow-md p-2 rounded-b-md flex flex-col outline-none border-t-2 border-blue-600 translate-y-full"
+            class="absolute origin-top bottom-0 left-0 transition animation-delay-150 w-full z-20 bg-white drop-shadow-md p-2 rounded-b-md flex flex-col outline-none border-t-2 border-primary-blue translate-y-full"
           >
             <!-- Level #1 -->
             <MenuItem v-for="menuItem in menuItems" :key="menuItem.path">
@@ -49,7 +49,7 @@
                   <div
                     v-if="menuItem.children && menuItem.children.length > 0"
                     class="flex gap-4 w-full items-center justify-between transition-colors"
-                    :class="firstLevelOpen ? 'text-blue-600' : ''"
+                    :class="firstLevelOpen ? 'text-primary-blue' : ''"
                   >
                     <div>
                       <NuxtLink :to="menuItem.path">
@@ -94,7 +94,7 @@
                           <MenuButton as="template">
                             <div
                               class="p-2 flex gap-4 w-full items-center justify-between transition-colors"
-                              :class="openSubMenu ? 'text-blue-600' : ''"
+                              :class="openSubMenu ? 'text-primary-blue' : ''"
                               v-if="
                                 menuSubItem.children && menuSubItem.children.length > 0
                               "
