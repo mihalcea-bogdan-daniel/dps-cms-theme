@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 .cms-card {
-  @apply border border-gray-300 rounded-md overflow-hidden flex;
+  @apply border border-gray-300 rounded-md overflow-hidden flex p-3 gap-2;
 
   &.cms-card-horizontal {
     @apply flex-col sm:flex-row-reverse;
   }
 
   .cms-card-title {
-    @apply text-xl text-slate-700 py-2 px-2 relative flex flex-col;
+    @apply text-xl text-slate-700 relative flex flex-col;
 
     &.cms-card-title-separator {
       @apply border-b border-gray-200
@@ -18,10 +18,10 @@
 
   }
   .cms-card-body {
-    @apply text-base mb-2 py-2 px-2;
+    @apply text-base mb-2;
   }
 
   .cms-card-footer {
-    @apply text-base py-4 px-2;
+    @apply text-base py-2;
   }
 }

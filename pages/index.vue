@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NuxtLayout name="default">
+    <NuxtLayout name="default" :featuredImage="false">
       <template #hero>
         <div class="col-span-12">
           <UiCard class="mb-4" horizontal>

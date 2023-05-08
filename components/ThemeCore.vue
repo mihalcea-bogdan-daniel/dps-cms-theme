@@ -1,9 +1,11 @@
 <template>
-  <div v-if="contentNode.children && contentNode.children.length > 0">
-    <h1 v-if="contentNode.properties['cd:title']">
-      {{ contentNode.properties["cd:title"]?.value }}
-    </h1>
-    <div class="flex flex-column gap-1">
+  <slot>
+    <div class="mb-2" v-if="hasFormattedContent" v-html="coumputedFormattedContent"></div>
+  </slot>
+  <div v-if="contentNode && contentNode.children && contentNode.children.length > 0">
+    <div class="flex flex-col gap-2">
+      <!-- Default slot is the formatted content -->
+      <!-- End Default slot -->
       <slot
         name="categories"
         :contentNodeCategories="contentNodeCategories"
@@ -18,9 +20,10 @@
 import { ContentNode } from "../types/ContentNode/ContentNode";
 const { t } = useI18n();
 interface ThemeCoreProps {
-  contentNode: ContentNode;
+  contentNode?: ContentNode;
 }
 const props = defineProps<ThemeCoreProps>();
+
 const contentNodeCategories = computed(() => {
   if (props.contentNode) {
     return props.contentNode.children.filter((ch) => {
@@ -30,6 +33,7 @@ const contentNodeCategories = computed(() => {
     return [];
   }
 });
+
 const contentNodeFiles = computed(() => {
   if (props.contentNode) {
     return props.contentNode.children.filter((ch) => {
@@ -39,6 +43,7 @@ const contentNodeFiles = computed(() => {
     return [];
   }
 });
+
 const contentNodeGaleries = computed(() => {
   if (props.contentNode) {
     return props.contentNode.children.filter((ch) => {
@@ -46,6 +51,26 @@ const contentNodeGaleries = computed(() => {
     });
   } else {
     return [];
+  }
+});
+
+const hasFormattedContent = computed(() => {
+  if (
+    props.contentNode !== undefined &&
+    props.contentNode.properties["cd:formattedContent"] &&
+    props.contentNode.properties["cd:formattedContent"].value != "" &&
+    props.contentNode.properties["cd:formattedContent"].value != undefined
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+});
+const coumputedFormattedContent: ComputedRef<string> = computed(() => {
+  if (hasFormattedContent) {
+    return props.contentNode?.properties["cd:formattedContent"]?.value as string;
+  } else {
+    return "";
   }
 });
 </script>

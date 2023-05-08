@@ -13,14 +13,14 @@
       >
         <NuxtLink
           :to="menuItem.path"
-          class="no-underline block h-full border-primary-blue hover:border-b-4 hover:text-primary-blue outline-none focus:text-pastel-blue"
+          class="no-underline flex items-center box-content h-full border-primary-blue hover:border-b-4 hover:text-primary-blue outline-none focus:text-pastel-blue"
           >{{ menuItem.label }}</NuxtLink
         >
       </MenuButton>
       <MenuButton
         v-else
         as="div"
-        class="h-full border-primary-blue hover:border-b-4"
+        class="h-full flex box-content border-primary-blue hover:border-b-4"
         :class="{ 'border-b-4 text-primary-blue': open }"
       >
         <div class="flex gap-3 items-center hover:text-primary-blue">

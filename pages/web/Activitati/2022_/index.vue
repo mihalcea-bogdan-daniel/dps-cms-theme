@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="default">
-    <div class="col-span-9 bg-green-100">
+    <div class="col-span-9 bg-green-100 h-[2000px]">
     <div>
       Override activitati
     </div>
