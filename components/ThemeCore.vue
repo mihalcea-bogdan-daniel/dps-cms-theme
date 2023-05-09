@@ -1,38 +1,87 @@
 <template>
-  <UiCard>
-    <template #title>
-      <h2 class="p-0">{{ contentNode.properties["cd:title"]?.value }}</h2>
-    </template>
-    <template #body>
-      <div v-html="contentNode.properties['cd:description'].value"></div>
-    </template>
-    <template #footer>
-      <NuxtLink class="cms-button" :href="contentNode.path"> {{ t("view.moreInformation") }} </NuxtLink>
-    </template>
-  </UiCard>
-  <div v-html="contentNode.properties['cd:description'].value"></div>
-
-  <div class="flex flex-column gap-1">
-    <UiChildNode
-      v-for="ch in contentNode.children"
-      :key="ch.id"
-      :childNode="ch"
-    ></UiChildNode>
-    <template name="article"></template>
-    <template name="category"></template>
-    <template name="files"></template>
-    <template name="gallery"></template>
+  <!-- default slot -->
+  <slot>
+    <div
+      class="mb-2"
+      v-if="hasFormattedContent"
+      v-html="coumputedFormattedContent"
+    ></div>
+  </slot>
+  <!-- End default slot -->
+  <div
+    v-if="
+      contentNode && contentNode.children && contentNode.children.length > 0
+    "
+  >
+    <div class="flex flex-col gap-2">
+      <!-- Default slot is the formatted content -->
+      <!-- End Default slot -->
+      <slot
+        name="categories"
+        :contentNodeCategories="contentNodeCategories"
+      ></slot>
+      <!-- <slot name="files" :contentNodeFiles="contentNodeFiles"></slot> -->
+      <slot name="galleries" :contentNodeGaleries="contentNodeGaleries"></slot>
+    </div>
   </div>
-  <!-- <pre>{{ contentNode }}</pre> -->
 </template>
 
 <script setup lang="ts">
 import { ContentNode } from "../types/ContentNode/ContentNode";
 const { t } = useI18n();
 interface ThemeCoreProps {
-  contentNode: ContentNode;
+  contentNode?: ContentNode;
 }
-defineProps<ThemeCoreProps>();
+const props = defineProps<ThemeCoreProps>();
+
+const contentNodeCategories = computed(() => {
+  if (props.contentNode) {
+    return props.contentNode.children;
+  } else {
+    return [];
+  }
+});
+
+// const contentNodeFiles = computed(() => {
+//   if (props.contentNode) {
+//     return props.contentNode.children.filter((ch) => {
+//       return ch.primaryType == "pa:file" || ch.primaryType == "pa:resource";
+//     });
+//   } else {
+//     return [];
+//   }
+// });
+
+const contentNodeGaleries = computed(() => {
+  if (props.contentNode) {
+    return props.contentNode.children.filter((ch) => {
+      return ch.primaryType == "cd:gallery";
+    });
+  } else {
+    return [];
+  }
+});
+
+const hasFormattedContent = computed(() => {
+  if (
+    props.contentNode !== undefined &&
+    props.contentNode.properties["cd:formattedContent"] &&
+    props.contentNode.properties["cd:formattedContent"].value != "" &&
+    props.contentNode.properties["cd:formattedContent"].value != undefined
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+});
+const coumputedFormattedContent: ComputedRef<string> = computed(() => {
+  if (hasFormattedContent) {
+    return props.contentNode?.properties["cd:formattedContent"]
+      ?.value as string;
+  } else {
+    return "";
+  }
+});
 </script>
 
 <style scoped></style>

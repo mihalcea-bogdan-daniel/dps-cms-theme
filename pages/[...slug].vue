@@ -1,17 +1,130 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
   <NuxtLayout>
-    <template v-slot="{ contentNode, pending }">
-      <div v-if="contentNode.contentNode && !pending" class="col-9">
-        <ThemeCore :contentNode="contentNode.contentNode"></ThemeCore>
-      </div>
-      <div v-else>
-        <div>Loading resources</div>
+    <!-- featured image slot -->
+    <template #featured-image="{ contentNode, pending }">
+      <div
+        v-if="featuredImageNode(contentNode)"
+        :style="{
+          background: `url('${featuredImageNode(contentNode)}')`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundBlendMode: 'multiply',
+        }"
+        class="w-full h-full relative flex items-center justify-center"
+      >
+        <h1
+          v-if="
+            !pending && contentNode && contentNode.properties['cd:title']?.value
+          "
+          class="absolute z-20"
+        >
+          {{ contentNode.properties["cd:title"].value }}
+        </h1>
+        <div
+          class="absolute w-full h-full bg-opacity-80 z-10 bg-pastel-blue"
+        ></div>
       </div>
     </template>
+    <!-- End featured image slot -->
+    <!-- Default slot -->
+    <template v-slot="{ contentNode, pending }">
+      <div v-if="!pending && contentNode" class="col-9">
+        <ThemeCore :contentNode="contentNode">
+          <template #categories="{ contentNodeCategories }">
+            <UiCard
+              icon="fa-folder"
+              v-for="category in contentNodeCategories"
+              :key="category.id"
+              noTitleSeparator
+            >
+              <template #header>
+                <i class="fa fa-folder text-primary-blue text-xl"></i>
+              </template>
+              <template #title>
+                <div class="flex gap-2 items-center">
+                  <NuxtLink
+                    class="text-primary-blue hover:text-pastel-blue"
+                    :to="category.path"
+                    >{{ category.properties["cd:title"]?.value || category.webName }}</NuxtLink
+                  >
+                </div>
+              </template>
+              <template #sub-title>
+                {{ category.properties["jcr:createdBy"]?.value }}
+              </template>
+              <template #body>
+                <div>{{ category.properties["cd:description"]?.value }}</div>
+              </template>
+            </UiCard>
+          </template>
+
+          <!-- <template #files="{ contentNodeFiles }">
+            <UiCard
+              icon="fa-file"
+              v-for="file in contentNodeFiles"
+              :key="file.id"
+              noTitleSeparator
+            >
+              <template #header>
+                <i class="fa fa-file text-primary-blue text-xl"></i>
+              </template>
+              <template #title>
+                <div class="flex gap-2 items-center">
+                  <NuxtLink
+                    noPrefetch
+                    class="text-primary-blue hover:text-pastel-blue"
+                    :to="file.path"
+                    >{{ file.webName }}</NuxtLink
+                  >
+                </div>
+              </template>
+              <template #sub-title>
+                {{ file.properties["jcr:createdBy"]?.value }}
+              </template>
+            </UiCard>
+          </template> -->
+        </ThemeCore>
+      </div>
+      <div v-else>
+        <div class="animation-spin">
+          <i class="fa fa-loader"></i>
+        </div>
+      </div>
+    </template>
+    <!-- End Default slot -->
+    <!-- Paginare -->
+    <template #pagination="{ totalPages, goToPageNumber }">
+      <UiPagination
+        :totalPages="totalPages"
+        :goToPageNumber="goToPageNumber"
+      ></UiPagination>
+    </template>
+    <!-- End Paginare -->
   </NuxtLayout>
 </template>
 <script setup lang="ts">
+import { ContentNode } from "../types/ContentNode/ContentNode";
+
+const config = useRuntimeConfig();
+
+const featuredImageNode = (contentNode: ContentNode) => {
+  if (contentNode.children) {
+    const imageNode = contentNode.children.find((ch) => {
+      return ch.webName.startsWith("thumbnail");
+    });
+    if (imageNode) {
+      const imageNodePathArray = imageNode.path.split("/");
+      imageNodePathArray.splice(0, 2);
+      return `${
+        config.public.apiBase
+      }/api/v1/web/get-file/${imageNodePathArray.join("/")}`;
+    } else {
+      return undefined;
+    }
+  } else {
+    return undefined;
+  }
+};
 </script>
 
 <style scoped></style>

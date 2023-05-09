@@ -17,6 +17,8 @@
     "@egjs/vue3-flicking": "^4.10.7",
     "@nuxtjs/i18n": "^8.0.0-beta.10",
     "@nuxtjs/tailwindcss": "^6.6.6",
+    "@vueuse/core": "^10.1.0",
+    "@vueuse/nuxt": "^10.1.0",
     "nuxt-headlessui": "^1.1.1",
     "pathe": "^1.1.0",
     "primeflex": "^3.3.0",
@@ -27,7 +29,6 @@
   "devDependencies": {
     "@nuxt/content": "^2.5.2",
     "@nuxt/eslint-config": "^0.1.1",
-    "@vue-macros/nuxt": "^1.2.7",
     "eslint": "^8.28.0",
     "nuxt": "^3.0.0",
     "typescript": "^4.9.3"

@@ -3,39 +3,83 @@
     class="cms-card"
     :class="[
       horizontal ? 'cms-card-horizontal' : '',
-      noBackground ? 'bg-none' : 'bg-white',
+      noBackground ? 'bg-none border-none' : 'bg-white drop-shadow-md',
     ]"
   >
-    <div v-if="!showImage">
-      <slot name="feature-img"></slot>
-    </div>
-    <div class="cms-card-title" :class="{'cms-card-title-separator': !noTitleSeparator}">
-      <slot name="title"> Titlul card </slot>
-    </div>
-    <div class="cms-card-body">
-      <slot name="body"> Continut card </slot>
-    </div>
-    <div class="cms-card-footer">
-      <slot name="footer" v-if="!hideFooter">
-        <button type="button" class="cms-button">Hello button</button>
+    <div v-if="!hideHeader" class="relative">
+      <slot name="header">
+        <!-- <img
+          src="https://images.unsplash.com/photo-1650989859642-dc988199807a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
+        /> -->
       </slot>
+    </div>
+    <div class="flex flex-col justify-between h-full w-full">
+      <div class="flex flex-col h-full">
+        <div
+          v-if="hasTitle"
+          class="cms-card-title"
+          :class="{ 'cms-card-title-separator': titleSeparatorClasses }"
+        >
+          <div v-if="hasTitle">
+            <slot name="title"></slot>
+          </div>
+          <div v-if="hasSubTitle" class="text-sm mt-1 text-gray-400">
+            <slot name="sub-title"></slot>
+          </div>
+        </div>
+        <div class="cms-card-body">
+          <slot name="body">
+            <!-- Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores
+            veritatis quia illum qui molestiae exercitationem velit ut quo
+            autem, magni sit, quod rem. Molestiae, vel neque sapiente libero
+            tempora repudiandae. -->
+          </slot>
+        </div>
+      </div>
+      <div
+        class="cms-card-footer"
+        v-if="!hideFooter && articleLink != undefined"
+      >
+        <slot name="footer">
+          <NuxtLink :to="articleLink" class="cms-button">{{
+            t("view.moreInformation")
+          }}</NuxtLink>
+        </slot>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+const { t } = useI18n();
+
 interface CardProps {
   title?: string;
   hideTitle?: boolean;
   hideBody?: boolean;
   hideFooter?: boolean;
-  titleLink?: string;
+  hideHeader?: boolean;
   noBackground?: boolean;
   horizontal?: boolean;
-  showImage?: boolean;
   noTitleSeparator?: boolean;
+  imgUrl?: string;
+  size?: string;
+  articleLink?: string;
 }
-defineProps<CardProps>();
+const props = defineProps<CardProps>();
+const titleSeparatorClasses = computed(() => {
+  if (props.horizontal) return false;
+  if (props.noBackground) return false;
+  if (props.noTitleSeparator) return false;
+  return true;
+});
+const slots = useSlots();
+const hasTitle = computed(() => {
+  return slots.title != undefined;
+});
+const hasSubTitle = computed(() => {
+  return slots["sub-title"] != undefined;
+});
 </script>
 
 <style scoped></style>

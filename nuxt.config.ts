@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     "nuxt-headlessui",
     "@nuxt/content",
     "@nuxtjs/tailwindcss",
+    "@vueuse/nuxt",
   ],
   plugins: [
     {
