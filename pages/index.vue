@@ -2,7 +2,7 @@
   <div>
     <NuxtLayout name="default" :featuredImage="false">
       <template #hero>
-        <div class="col-span-12">
+        <div class="col-span-12 block">
           <UiCard class="mb-4" horizontal>
             <template #header>
               <div>

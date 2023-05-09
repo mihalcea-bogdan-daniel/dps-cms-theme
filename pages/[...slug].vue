@@ -1,6 +1,32 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
   <NuxtLayout>
+    <!-- featured image slot -->
+    <template #featured-image="{ contentNode, pending }">
+      <div
+        v-if="featuredImageNode(contentNode)"
+        :style="{
+          background: `url('${featuredImageNode(contentNode)}')`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundBlendMode: 'multiply',
+        }"
+        class="w-full h-full relative flex items-center justify-center"
+      >
+        <h1
+          v-if="
+            !pending && contentNode && contentNode.properties['cd:title']?.value
+          "
+          class="absolute z-20"
+        >
+          {{ contentNode.properties["cd:title"].value }}
+        </h1>
+        <div
+          class="absolute w-full h-full bg-opacity-80 z-10 bg-pastel-blue"
+        ></div>
+      </div>
+    </template>
+    <!-- End featured image slot -->
+    <!-- Default slot -->
     <template v-slot="{ contentNode, pending }">
       <div v-if="!pending && contentNode" class="col-9">
         <ThemeCore :contentNode="contentNode">
@@ -19,7 +45,7 @@
                   <NuxtLink
                     class="text-primary-blue hover:text-pastel-blue"
                     :to="category.path"
-                    >{{ category.properties["cd:title"]?.value }}</NuxtLink
+                    >{{ category.properties["cd:title"]?.value || category.webName }}</NuxtLink
                   >
                 </div>
               </template>
@@ -32,7 +58,7 @@
             </UiCard>
           </template>
 
-          <template #files="{ contentNodeFiles }">
+          <!-- <template #files="{ contentNodeFiles }">
             <UiCard
               icon="fa-file"
               v-for="file in contentNodeFiles"
@@ -56,7 +82,7 @@
                 {{ file.properties["jcr:createdBy"]?.value }}
               </template>
             </UiCard>
-          </template>
+          </template> -->
         </ThemeCore>
       </div>
       <div v-else>
@@ -65,13 +91,40 @@
         </div>
       </div>
     </template>
+    <!-- End Default slot -->
     <!-- Paginare -->
     <template #pagination="{ totalPages, goToPageNumber }">
-      <UiPagination :totalPages="totalPages" :goToPageNumber="goToPageNumber"></UiPagination>
+      <UiPagination
+        :totalPages="totalPages"
+        :goToPageNumber="goToPageNumber"
+      ></UiPagination>
     </template>
-    <!-- Paginare end -->
+    <!-- End Paginare -->
   </NuxtLayout>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ContentNode } from "../types/ContentNode/ContentNode";
+
+const config = useRuntimeConfig();
+
+const featuredImageNode = (contentNode: ContentNode) => {
+  if (contentNode.children) {
+    const imageNode = contentNode.children.find((ch) => {
+      return ch.webName.startsWith("thumbnail");
+    });
+    if (imageNode) {
+      const imageNodePathArray = imageNode.path.split("/");
+      imageNodePathArray.splice(0, 2);
+      return `${
+        config.public.apiBase
+      }/api/v1/web/get-file/${imageNodePathArray.join("/")}`;
+    } else {
+      return undefined;
+    }
+  } else {
+    return undefined;
+  }
+};
+</script>
 
 <style scoped></style>

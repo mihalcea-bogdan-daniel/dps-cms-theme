@@ -5,7 +5,7 @@
       as="div"
       v-for="menuItem in menuItems"
       :key="menuItem.path"
-      class="h-full z-50"
+      class="h-full"
     >
       <MenuButton
         v-if="menuItem.children == undefined || menuItem.children.length == 0"
@@ -31,7 +31,7 @@
         </div>
       </MenuButton>
       <MenuItems
-        class="absolute bg-white drop-shadow-md p-2 rounded-b-md rounded-r-md flex flex-col outline-none"
+        class="absolute bg-white drop-shadow-md p-2 rounded-b-md rounded-r-md flex flex-col outline-none z-50"
         v-if="menuItem.children != undefined && menuItem.children.length > 0"
       >
         <MenuItem

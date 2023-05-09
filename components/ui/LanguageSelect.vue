@@ -1,6 +1,6 @@
 <template>
   <Listbox v-model="localesModelValue">
-    <div class="">
+    <div class="z-[55]">
       <ListboxButton
         class="relative w-30 cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300 sm:text-sm"
       >

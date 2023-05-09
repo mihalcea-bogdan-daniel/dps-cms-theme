@@ -1,8 +1,18 @@
 <template>
+  <!-- default slot -->
   <slot>
-    <div class="mb-2" v-if="hasFormattedContent" v-html="coumputedFormattedContent"></div>
+    <div
+      class="mb-2"
+      v-if="hasFormattedContent"
+      v-html="coumputedFormattedContent"
+    ></div>
   </slot>
-  <div v-if="contentNode && contentNode.children && contentNode.children.length > 0">
+  <!-- End default slot -->
+  <div
+    v-if="
+      contentNode && contentNode.children && contentNode.children.length > 0
+    "
+  >
     <div class="flex flex-col gap-2">
       <!-- Default slot is the formatted content -->
       <!-- End Default slot -->
@@ -10,7 +20,7 @@
         name="categories"
         :contentNodeCategories="contentNodeCategories"
       ></slot>
-      <slot name="files" :contentNodeFiles="contentNodeFiles"></slot>
+      <!-- <slot name="files" :contentNodeFiles="contentNodeFiles"></slot> -->
       <slot name="galleries" :contentNodeGaleries="contentNodeGaleries"></slot>
     </div>
   </div>
@@ -26,23 +36,21 @@ const props = defineProps<ThemeCoreProps>();
 
 const contentNodeCategories = computed(() => {
   if (props.contentNode) {
-    return props.contentNode.children.filter((ch) => {
-      return ch.primaryType == "cd:content";
-    });
+    return props.contentNode.children;
   } else {
     return [];
   }
 });
 
-const contentNodeFiles = computed(() => {
-  if (props.contentNode) {
-    return props.contentNode.children.filter((ch) => {
-      return ch.primaryType == "pa:file" || ch.primaryType == "pa:resource";
-    });
-  } else {
-    return [];
-  }
-});
+// const contentNodeFiles = computed(() => {
+//   if (props.contentNode) {
+//     return props.contentNode.children.filter((ch) => {
+//       return ch.primaryType == "pa:file" || ch.primaryType == "pa:resource";
+//     });
+//   } else {
+//     return [];
+//   }
+// });
 
 const contentNodeGaleries = computed(() => {
   if (props.contentNode) {
@@ -68,7 +76,8 @@ const hasFormattedContent = computed(() => {
 });
 const coumputedFormattedContent: ComputedRef<string> = computed(() => {
   if (hasFormattedContent) {
-    return props.contentNode?.properties["cd:formattedContent"]?.value as string;
+    return props.contentNode?.properties["cd:formattedContent"]
+      ?.value as string;
   } else {
     return "";
   }
