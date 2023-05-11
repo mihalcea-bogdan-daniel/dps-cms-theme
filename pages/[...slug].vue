@@ -9,20 +9,21 @@
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
           backgroundBlendMode: 'multiply',
+          backgroundPosition: 'center center',
         }"
-        class="w-full h-full relative flex items-center justify-center"
+        style="-webkit-mask-image: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, rgba(255,255,255,0) 100%);
+}"
+        class="w-full container h-full relative flex items-center justify-center z-10"
       >
         <h1
           v-if="
             !pending && contentNode && contentNode.properties['cd:title']?.value
           "
-          class="absolute z-20"
+          class="absolute z-10"
         >
           {{ contentNode.properties["cd:title"].value }}
         </h1>
-        <div
-          class="absolute w-full h-full bg-opacity-80 z-10 bg-pastel-blue"
-        ></div>
+        <div class="absolute w-full h-full bg-opacity-80 bg-pastel-blue"></div>
       </div>
     </template>
     <!-- End featured image slot -->
@@ -45,7 +46,9 @@
                   <NuxtLink
                     class="text-primary-blue hover:text-pastel-blue"
                     :to="category.path"
-                    >{{ category.properties["cd:title"]?.value || category.webName }}</NuxtLink
+                    >{{
+                      category.properties["cd:title"]?.value || category.webName
+                    }}</NuxtLink
                   >
                 </div>
               </template>
@@ -108,7 +111,7 @@ import { ContentNode } from "../types/ContentNode/ContentNode";
 const config = useRuntimeConfig();
 
 const featuredImageNode = (contentNode: ContentNode) => {
-  if (contentNode.children) {
+  if (contentNode && contentNode.children) {
     const imageNode = contentNode.children.find((ch) => {
       return ch.webName.startsWith("thumbnail");
     });
