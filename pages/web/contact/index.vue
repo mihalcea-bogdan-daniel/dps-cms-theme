@@ -8,10 +8,9 @@
       :validationSchema="schema"
       class="col-span-12 grid grid-cols-12 gap-2"
       v-slot="{ values }"
+      @submit="handleFormSubmit"
     >
-      <!-- <form class="container col-span-12">
-          <input type="text" placeholder="Some placeholder" />
-        </form> -->
+      <!-- categorie radio -->
       <div class="col-span-12 flex items-center justify-start w-full gap-4">
         <div class="flex gap-1 items-center">
           <VField name="category" type="radio" value="Tea" id="tea" />
@@ -22,7 +21,8 @@
           <label for="coffee">Coffe</label>
         </div>
       </div>
-
+      <!-- end categorie radio -->
+      <!-- request type dropdown -->
       <VField
         name="requestType"
         as="div"
@@ -38,10 +38,7 @@
         />
         <VErrorMessage class="cms-error" name="requestType"></VErrorMessage>
       </VField>
-      <!-- <select>
-        <option value="type 1">Tipul 1</option>
-        <option value="type 2">Tipul 2</option>
-      </select> -->
+      <!-- end request type dropdown -->
       <VField
         name="firstName"
         type="firstName"
@@ -77,24 +74,24 @@
         <VErrorMessage class="cms-error" name="lastName"></VErrorMessage>
       </VField>
       <VField
-        name="email"
-        type="email"
+        name="eMail"
+        type="eMail"
         v-slot="{ field, errorMessage, meta }"
         as="div"
         class="flex flex-col col-span-12 sm:col-span-6"
       >
-        <label for="email">E-mail</label>
+        <label for="eMail">E-mail</label>
         <input
-          id="email"
+          id="eMail"
           v-bind="field"
           :class="errorMessage ? 'cms-error' : ''"
-          type="email"
-          placeholder="Adresa de email"
+          type="eMail"
+          placeholder="Adresa de eMail"
         />
-        <VErrorMessage class="cms-error" name="email"></VErrorMessage>
+        <VErrorMessage class="cms-error" name="eMail"></VErrorMessage>
       </VField>
       <VField
-        name="telephone"
+        name="phone"
         type="phone"
         v-slot="{ field, errorMessage, meta }"
         as="div"
@@ -117,7 +114,7 @@
         as="div"
         class="flex flex-col col-span-12"
       >
-        <label for="message">Numarul de telefon</label>
+        <label for="message">Mesajul transmis</label>
         <textarea
           id="message"
           v-bind="field"
@@ -143,7 +140,6 @@
             v-bind="field"
             id="acceptConditions"
             :class="errorMessage ? 'cms-error' : ''"
-
           />
           <label for="acceptConditions">Accept conditions</label>
         </VField>
@@ -154,25 +150,80 @@
       </div>
 
       <!-- <pre class="col-span-12">{{ schema }}</pre> -->
-      <button>Trimite</button>
+      <button type="submit">Trimite</button>
     </VForm>
     <!-- </template> -->
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
+import { ToastServiceMethods } from "primevue/toastservice";
 import * as yup from "yup";
-import "yup-phone";
+const config = useRuntimeConfig();
 
+const toast: ToastServiceMethods | undefined = inject("toast");
+
+interface Data {
+  email: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  message: string;
+  requestType: string;
+  category: string;
+  acceptConditions: string;
+}
+const handleFormSubmit = (e: Data) => {
+  const { acceptConditions, ...rest } = e;
+  if (acceptConditions == "true") {
+    useFetch(`/api/v1/web/contact-form`, {
+      baseURL: config.public.apiBase,
+      method: "POST",
+      body: { ...rest },
+    })
+      .then(({ error }) => {
+        if (error.value) {
+          throw new Error("A aparut o eroare la transmiterea mesajului");
+        } else {
+          toast?.add({
+            severity: "success",
+            summary: "Mesajul a fost transmis cu succes",
+            life: 10000,
+          });
+        }
+      })
+      .catch((err) => {
+        if (toast) {
+          toast.add({
+            severity: "error",
+            summary: "A aparut o eroare",
+            detail: "Nu s-a putut transmite continutul",
+            life: 10000,
+          });
+        }
+      });
+  }
+};
+
+// const schema = yup.object({
+//   eMail: yup.string().required().email(),
+//   phone: yup.string().min(10).required(),
+//   firstName: yup.string().required(),
+//   lastName: yup.string().required(),
+//   message: yup.string().required(),
+//   category: yup.string(),
+//   requestType: yup.string().required(),
+//   acceptConditions: yup.boolean().required().isTrue(),
+// });
 const schema = yup.object({
-  email: yup.string().required().email(),
-  telephone: yup.string().min(10).required(),
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
-  message: yup.string().required(),
+  eMail: yup.string().email(),
+  phone: yup.string(),
+  firstName: yup.string(),
+  lastName: yup.string(),
+  message: yup.string(),
   category: yup.string(),
-  requestType: yup.string().required(),
-  acceptConditions: yup.boolean().required().isTrue(),
+  requestType: yup.string(),
+  acceptConditions: yup.boolean().isTrue(),
 });
 </script>
 

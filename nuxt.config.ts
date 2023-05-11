@@ -13,6 +13,9 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@vueuse/nuxt",
   ],
+  build: {
+    transpile: ["primevue"]
+  },
   plugins: [
     {
       src: join(currentDir, "./plugins/primevue.ts"),
