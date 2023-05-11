@@ -1,7 +1,72 @@
-input  {
-  @apply border rounded-md border-slate-400 p-2 text-slate-900 placeholder-slate-400 hover:ring-1 hover:ring-opacity-50 hover:ring-blue-600 outline-blue-600;
+input,
+textarea, select {
+  @apply border rounded-md border-gray-300 p-1 text-primary-black placeholder-gray-300 hover:ring-2 hover:ring-opacity-50 hover:ring-primary-blue outline-none focus:ring-2 focus:ring-primary-blue focus:ring-opacity-50 focus:border-primary-blue;
+
   &.cms-error {
-    @apply outline-red-600 text-red-600 border-red-400 focus:ring-1 focus:ring-red-600 hover:ring-2 hover:ring-opacity-50 hover:ring-red-400 placeholder-red-400 active:ring-red-600 !important;
+    @apply border rounded-md border-red-300 p-1 text-primary-black placeholder-gray-300 hover:ring-2 hover:ring-opacity-50 hover:ring-red-400 outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 focus:border-red-600 !important;
   }
 
+}
+
+input[type="radio"] {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  @apply bg-white m-0 w-4 h-4 rounded-full border-b border-gray-300;
+
+  &.cms-error {
+    @apply border rounded-full border-red-300 p-1 hover:ring-2 hover:ring-opacity-50 hover:ring-red-400 outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 focus:border-red-600 !important;
+    &::before{
+      @apply bg-red-600 shadow-red-300 !important;
+    }
+  }
+
+  &::before{
+    @apply bg-primary-blue shadow-primary-blue w-full h-full !important;
+    content: "";
+    border-radius: 9999px;
+    transform: scale(0);
+    transition: 100ms transform ease-in-out;
+  }
+  &:checked {
+    @apply border-primary-blue;
+  }
+  &:checked::before {
+    transform: scale(1.5);
+  }
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  @apply bg-white m-0 w-4 h-4 border-b border-gray-300 rounded-sm;
+
+  &.cms-error {
+    @apply border rounded-sm border-red-300 hover:ring-2 hover:ring-opacity-50 hover:ring-red-400 outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 focus:border-red-600 !important;
+    &::before{
+      @apply bg-red-600 shadow-red-300 !important;
+    }
+  }
+
+  &::before{
+    @apply text-white bg-primary-blue !important;
+    font-family: "Font Awesome 6 Pro";
+    font-size: 0.50em;
+    content: "\f00c";
+    line-height: 1;
+    transform: scale(0);
+    font-weight: 900;
+    transition: 100ms transform ease-in-out;
+  }
+  &:checked {
+    @apply border-primary-blue bg-primary-blue;
+  }
+  &:checked::before {
+    transform: scale(1.5);
+  }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex relative h-full items-center gap-8">
+  <div class="flex relative h-full items-center gap-8 border-b border-secondary-black">
     <Menu
       v-slot="{ open }"
       as="div"
