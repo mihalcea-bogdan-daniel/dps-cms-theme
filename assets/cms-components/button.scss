@@ -1,0 +1,84 @@
+button.cms-btn {
+  @apply bg-primary text-white p-2 px-4 rounded-md text-base select-none text-center w-fit flex items-center justify-center;
+
+  &.btn-md {
+    @apply text-lg p-4 px-5 max-h-12;
+  }
+
+  &.btn-sm {
+    @apply text-sm p-1 px-2 max-h-8;
+  }
+  &.btn-xs {
+    @apply text-xs p-0 px-2 max-h-6 rounded;
+  }
+  &:hover {
+    @apply bg-primary-700;
+  }
+  &:focus {
+    @apply ring-2 ring-primary ring-opacity-50 outline-none;
+  }
+  &:active {
+    @apply bg-primary;
+  }
+
+  &.btn-secondary {
+    @apply bg-primary-100 text-primary;
+    &:hover {
+      @apply bg-primary-50;
+    }
+    &:active {
+      @apply bg-primary-500;
+    }
+  }
+
+  &.cms-btn-info {
+    @apply bg-purple-500 text-white;
+    &:hover {
+      @apply bg-purple-300 text-purple-900;
+    }
+    &:focus {
+      @apply ring-2 ring-purple-500 ring-opacity-50 outline-none;
+    }
+    &:active {
+      @apply bg-purple-500;
+    }
+  }
+
+  &.cms-btn-danger {
+    @apply bg-red-700 text-white;
+    &:hover {
+      @apply bg-red-300 text-red-900;
+    }
+    &:focus {
+      @apply ring-2 ring-red-500 ring-opacity-50 outline-none;
+    }
+    &:active {
+      @apply bg-red-900 text-white;
+    }
+  }
+
+  &.cms-btn-success {
+    @apply bg-green-700 text-white;
+    &:hover {
+      @apply bg-green-500 text-green-900;
+    }
+    &:focus {
+      @apply ring-2 ring-green-500 ring-opacity-50 outline-none;
+    }
+    &:active {
+      @apply bg-green-900 text-white;
+    }
+  }
+  &.cms-btn-warn {
+    @apply bg-yellow-500 text-black;
+    &:hover {
+      @apply bg-yellow-300;
+    }
+    &:focus {
+      @apply ring-2 ring-yellow-500 ring-opacity-50 outline-none;
+    }
+    &:active {
+      @apply bg-yellow-500;
+    }
+  }
+}

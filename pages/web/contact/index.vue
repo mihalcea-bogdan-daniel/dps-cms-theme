@@ -149,8 +149,7 @@
         ></VErrorMessage>
       </div>
 
-      <!-- <pre class="col-span-12">{{ schema }}</pre> -->
-      <button type="submit">Trimite</button>
+      <button class="cms-btn" type="submit">Trimite</button>
     </VForm>
     <!-- </template> -->
   </NuxtLayout>
@@ -215,7 +214,6 @@ const schema = yup.object({
   requestType: yup.string().required(),
   acceptConditions: yup.boolean().required().isTrue(),
 });
-
 </script>
 
 <style scoped></style>
