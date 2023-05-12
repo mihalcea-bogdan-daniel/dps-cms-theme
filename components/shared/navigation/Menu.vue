@@ -13,18 +13,18 @@
       >
         <NuxtLink
           :to="menuItem.path"
-          class="no-underline flex items-center box-content h-full border-primary-blue hover:border-b-4 hover:text-primary-blue outline-none focus:text-pastel-blue"
+          class="no-underline flex items-center box-content h-full border-primary hover:border-b-4 hover:text-primary outline-none focus:text-primary-100"
           >{{ menuItem.label }}</NuxtLink
         >
       </MenuButton>
       <MenuButton
         v-else
         as="div"
-        class="h-full flex box-content border-primary-blue hover:border-b-4"
-        :class="{ 'border-b-4 text-primary-blue': open }"
+        class="h-full flex box-content border-primary hover:border-b-4"
+        :class="{ 'border-b-4 text-primary': open }"
       >
-        <div class="flex gap-3 items-center hover:text-primary-blue">
-          <button class="outline-none focus:text-primary-blue">
+        <div class="flex gap-3 items-center hover:text-primary">
+          <button class="outline-none focus:text-primary">
             {{ menuItem.label }}
           </button>
           <i class="fa fa-caret-down"></i>
@@ -42,11 +42,11 @@
         >
           <div
             v-if="menuSubItem.children && menuSubItem.children?.length > 0"
-            class="p-2 relative hover:bg-pastel-black rounded-md"
+            class="p-2 relative hover:bg-black-50 rounded-md"
           >
             <div
               class="flex gap-4 items-center justify-between"
-              :class="active ? 'text-primary-blue bg-pastel-black' : ''"
+              :class="active ? 'text-primary bg-black-50' : ''"
             >
               <NuxtLink
                 :href="menuSubItem.path"
@@ -62,7 +62,7 @@
                 <NuxtLink
                   v-for="leafItem in menuSubItem.children"
                   :href="leafItem.path"
-                  class="p-3 hover:bg-pastel-black hover:text-primary-blue rounded-md"
+                  class="p-3 hover:bg-black-50 hover:text-primary rounded-md"
                 >
                   <span class="text-inherit">{{ leafItem.label }}</span>
                 </NuxtLink>
@@ -72,7 +72,7 @@
           <NuxtLink
             v-else
             :to="menuSubItem.path"
-            class="p-3 hover:bg-pastel-black hover:text-primary-blue rounded-md"
+            class="p-3 hover:bg-black-50 hover:text-primary rounded-md"
             >{{ menuSubItem.label }}</NuxtLink
           >
         </MenuItem>

@@ -1,8 +1,8 @@
 <template>
   <NuxtLayout>
     <template #featured-image>
-      <div v-if="error" class="text-primary-blue">
-        <h1 class="text-primary-blue">{{ t(`error.error`) + ' ' + error.statusCode }}</h1>
+      <div v-if="error" class="text-primary">
+        <h1 class="text-primary">{{ t(`error.error`) + ' ' + error.statusCode }}</h1>
         <h3>{{ t(`error.${error.statusCode}`) }}</h3>
       </div>
     </template>

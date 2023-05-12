@@ -9,7 +9,7 @@
 @import url(./cms-components/typography.scss);
 
 .cms-button {
-  @apply bg-primary-blue w-fit text-white p-2 rounded-md hover:bg-primary-blue cursor-pointer active:bg-primary-blue focus:ring-2 focus:ring-pastel-blue;
+  @apply bg-primary w-fit text-white p-2 rounded-md hover:bg-primary cursor-pointer active:bg-primary focus:ring-2 focus:ring-primary-100;
 
   &.button-sm {
     @apply p-1 text-sm;

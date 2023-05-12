@@ -42,9 +42,9 @@ const queryWithoutPage = computed(() => {
 
 <style scoped lang="scss">
 .page-item {
-  @apply text-primary-black;
+  @apply text-black;
   &.active-page-item {
-    @apply text-primary-blue font-bold;
+    @apply text-primary font-bold;
   }
 }
 </style>

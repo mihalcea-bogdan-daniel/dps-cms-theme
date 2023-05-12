@@ -1,9 +1,9 @@
 input,
 textarea, select {
-  @apply border rounded-md border-gray-300 p-1 text-primary-black placeholder-gray-300 hover:ring-2 hover:ring-opacity-50 hover:ring-primary-blue outline-none focus:ring-2 focus:ring-primary-blue focus:ring-opacity-50 focus:border-primary-blue;
+  @apply border rounded-md border-gray-300 p-1 text-black placeholder-gray-300 hover:ring-2 hover:ring-opacity-50 hover:ring-primary outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 focus:border-primary;
 
   &.cms-error {
-    @apply border rounded-md border-red-300 p-1 text-primary-black placeholder-gray-300 hover:ring-2 hover:ring-opacity-50 hover:ring-red-400 outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 focus:border-red-600 !important;
+    @apply border rounded-md border-red-300 p-1 text-black placeholder-gray-300 hover:ring-2 hover:ring-opacity-50 hover:ring-red-400 outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 focus:border-red-600 !important;
   }
 
 }
@@ -24,14 +24,14 @@ input[type="radio"] {
   }
 
   &::before{
-    @apply bg-primary-blue shadow-primary-blue w-full h-full !important;
+    @apply bg-primary shadow-primary w-full h-full !important;
     content: "";
     border-radius: 9999px;
     transform: scale(0);
     transition: 100ms transform ease-in-out;
   }
   &:checked {
-    @apply border-primary-blue;
+    @apply border-primary;
   }
   &:checked::before {
     transform: scale(1.5);
@@ -54,7 +54,7 @@ input[type="checkbox"] {
   }
 
   &::before{
-    @apply text-white bg-primary-blue !important;
+    @apply text-white bg-primary !important;
     font-family: "Font Awesome 6 Pro";
     font-size: 0.50em;
     content: "\f00c";
@@ -64,7 +64,7 @@ input[type="checkbox"] {
     transition: 100ms transform ease-in-out;
   }
   &:checked {
-    @apply border-primary-blue bg-primary-blue;
+    @apply border-primary bg-primary;
   }
   &:checked::before {
     transform: scale(1.5);

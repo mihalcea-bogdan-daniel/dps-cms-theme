@@ -197,7 +197,7 @@ const handleFormSubmit = (e: Data) => {
           toast.add({
             severity: "error",
             summary: "A aparut o eroare",
-            detail: "Nu s-a putut transmite continutul",
+            detail: "Nu s-a putut transmite continutul mesajului",
             life: 10000,
           });
         }
@@ -205,26 +205,17 @@ const handleFormSubmit = (e: Data) => {
   }
 };
 
-// const schema = yup.object({
-//   eMail: yup.string().required().email(),
-//   phone: yup.string().min(10).required(),
-//   firstName: yup.string().required(),
-//   lastName: yup.string().required(),
-//   message: yup.string().required(),
-//   category: yup.string(),
-//   requestType: yup.string().required(),
-//   acceptConditions: yup.boolean().required().isTrue(),
-// });
 const schema = yup.object({
-  eMail: yup.string().email(),
-  phone: yup.string(),
-  firstName: yup.string(),
-  lastName: yup.string(),
-  message: yup.string(),
+  eMail: yup.string().required().email(),
+  phone: yup.string().min(10).required(),
+  firstName: yup.string().required(),
+  lastName: yup.string().required(),
+  message: yup.string().required(),
   category: yup.string(),
-  requestType: yup.string(),
-  acceptConditions: yup.boolean().isTrue(),
+  requestType: yup.string().required(),
+  acceptConditions: yup.boolean().required().isTrue(),
 });
+
 </script>
 
 <style scoped></style>

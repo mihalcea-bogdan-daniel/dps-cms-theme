@@ -3,7 +3,7 @@
 
 body {
   font-family: 'Schibsted Grotesk', sans-serif;
-  color: theme("colors.primary.black")
+  color: theme("colors.black.950")
 }
 
 h1,
@@ -15,10 +15,10 @@ h6,
 p,
 label,
 span {
-  @apply text-primary-black;
+  @apply text-black;
 
   &.title {
-    @apply text-secondary-black;
+    @apply text-black-600;
   }
 
   &.cms-error {
