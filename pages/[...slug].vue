@@ -13,18 +13,16 @@
         }"
         style="-webkit-mask-image: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, rgba(255,255,255,0) 100%);
 }"
-        class="w-full container h-full relative flex items-center justify-center z-10"
+        class="w-full container h-full relative flex items-center justify-center z-10 opacity-20"
+      ></div>
+      <h1
+        v-if="
+          !pending && contentNode && contentNode.properties['cd:title']?.value
+        "
+        class="absolute z-10 title"
       >
-        <h1
-          v-if="
-            !pending && contentNode && contentNode.properties['cd:title']?.value
-          "
-          class="absolute z-10"
-        >
-          {{ contentNode.properties["cd:title"].value }}
-        </h1>
-        <div class="absolute w-full h-full bg-opacity-80 bg-pastel-blue"></div>
-      </div>
+        {{ contentNode.properties["cd:title"].value }}
+      </h1>
     </template>
     <!-- End featured image slot -->
     <!-- Default slot -->
@@ -39,12 +37,12 @@
               noTitleSeparator
             >
               <template #header>
-                <i class="fa fa-folder text-primary-blue text-xl"></i>
+                <i class="fa fa-folder text-primary text-xl"></i>
               </template>
               <template #title>
                 <div class="flex gap-2 items-center">
                   <NuxtLink
-                    class="text-primary-blue hover:text-pastel-blue"
+                    class="text-primary hover:text-primary-100"
                     :to="category.path"
                     >{{
                       category.properties["cd:title"]?.value || category.webName
@@ -69,13 +67,13 @@
               noTitleSeparator
             >
               <template #header>
-                <i class="fa fa-file text-primary-blue text-xl"></i>
+                <i class="fa fa-file text-primary text-xl"></i>
               </template>
               <template #title>
                 <div class="flex gap-2 items-center">
                   <NuxtLink
                     noPrefetch
-                    class="text-primary-blue hover:text-pastel-blue"
+                    class="text-primary hover:text-primary-100"
                     :to="file.path"
                     >{{ file.webName }}</NuxtLink
                   >

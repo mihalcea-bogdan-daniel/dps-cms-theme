@@ -45,7 +45,7 @@ select {
   align-items: center;
 }
 .cms-select:after {
-  @apply text-primary-blue;
+  @apply text-primary;
   font-family: "Font Awesome 6 Pro";
   content: "\f078";
   font-weight: 900;
