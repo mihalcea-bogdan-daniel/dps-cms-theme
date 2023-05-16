@@ -1,4 +1,4 @@
-import { resolve } from "pathe";
+// import { resolve } from "pathe";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 
@@ -53,7 +53,7 @@ export default defineNuxtConfig({
       content: {
         driver: "fs",
         prefix: "/content", // All contents inside this source will be prefixed with `/docs`
-        base: resolve(__dirname, "content"),
+        base: join(currentDir, "/pages/content"),
       },
     },
   },
