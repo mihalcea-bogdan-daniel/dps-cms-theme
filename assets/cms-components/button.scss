@@ -82,3 +82,7 @@ button.cms-btn {
     }
   }
 }
+
+.cms-link {
+  @apply text-primary hover:text-primary-700 hover:underline;
+}

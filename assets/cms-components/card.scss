@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .cms-card {
-  @apply border border-gray-300 rounded-md overflow-hidden flex p-3 gap-2;
+  @apply border border-gray-300 rounded-md overflow-hidden flex;
 
   &.cms-card-horizontal {
     @apply flex-col sm:flex-row-reverse;
@@ -18,7 +18,7 @@
 
   }
   .cms-card-body {
-    @apply text-base mb-2;
+    @apply text-base flex-1;
   }
 
   .cms-card-footer {

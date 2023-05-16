@@ -11,6 +11,10 @@ export default <Partial<Config>>{
       "2xl": "1440px",
     },
     extend: {
+      padding: {
+        "1/2": "50%",
+        full: "100%",
+      },
       colors: {
         primary: {
           DEFAULT: "#2E71EA", // Primary default
@@ -28,13 +32,13 @@ export default <Partial<Config>>{
         },
         black: {
           DEFAULT: "#282828",
-          50: "#F8F8F8",//black-50
+          50: "#F8F8F8", //black-50
           100: "#EBEBEB",
           200: "#D4D4D4",
           300: "#BDBDBD",
           400: "#A6A6A6",
           500: "#8F8F8F",
-          600: "#848484",//secondary-black
+          600: "#848484", //secondary-black
           700: "#616161",
           800: "#4A4A4A",
           900: "#333333",
@@ -58,6 +62,9 @@ export default <Partial<Config>>{
           "2xl": "1296px",
         },
       },
+      gridTemplateColumns: {
+        'main-2-cols': "minmax(0, 824px) minmax(0, 376px)"
+      }
     },
   },
   // theme: {},

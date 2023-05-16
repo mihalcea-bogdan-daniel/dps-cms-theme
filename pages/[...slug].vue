@@ -23,68 +23,107 @@
       >
         {{ contentNode.properties["cd:title"].value }}
       </h1>
+      <h1 v-else class="z-10 absolute title">{{ contentNode?.webName }}</h1>
     </template>
     <!-- End featured image slot -->
     <!-- Default slot -->
     <template v-slot="{ contentNode, pending }">
-      <div v-if="!pending && contentNode" class="col-9">
-        <ThemeCore :contentNode="contentNode">
-          <template #categories="{ contentNodeCategories }">
-            <UiCard
-              icon="fa-folder"
-              v-for="category in contentNodeCategories"
-              :key="category.id"
-              noTitleSeparator
-            >
-              <template #header>
-                <i class="fa fa-folder text-primary text-xl"></i>
-              </template>
-              <template #title>
-                <div class="flex gap-2 items-center">
-                  <NuxtLink
-                    class="text-primary hover:text-primary-100"
-                    :to="category.path"
-                    >{{
-                      category.properties["cd:title"]?.value || category.webName
-                    }}</NuxtLink
-                  >
-                </div>
-              </template>
-              <template #sub-title>
-                {{ category.properties["jcr:createdBy"]?.value }}
-              </template>
-              <template #body>
-                <div>{{ category.properties["cd:description"]?.value }}</div>
-              </template>
-            </UiCard>
-          </template>
-
-          <!-- <template #files="{ contentNodeFiles }">
-            <UiCard
-              icon="fa-file"
-              v-for="file in contentNodeFiles"
-              :key="file.id"
-              noTitleSeparator
-            >
-              <template #header>
-                <i class="fa fa-file text-primary text-xl"></i>
-              </template>
-              <template #title>
-                <div class="flex gap-2 items-center">
-                  <NuxtLink
-                    noPrefetch
-                    class="text-primary hover:text-primary-100"
-                    :to="file.path"
-                    >{{ file.webName }}</NuxtLink
-                  >
-                </div>
-              </template>
-              <template #sub-title>
-                {{ file.properties["jcr:createdBy"]?.value }}
-              </template>
-            </UiCard>
-          </template> -->
-        </ThemeCore>
+      <div v-if="!pending && contentNode">
+        <!-- Formatted content -->
+        <div
+          v-if="contentNode.properties['cd:formattedContent']"
+          v-html="
+            contentNode && contentNode.properties['cd:formattedContent'].value
+          "
+        ></div>
+        <div v-if="contentNode.primaryType == 'cd:gallery'" class="mb-2">
+          <SharedGallery :galleryNode="contentNode" displayAs="grid"></SharedGallery>
+        </div>
+        <!-- End Formatted content -->
+        <!-- Children list -->
+        <div v-if="contentNode.children && contentNode.primaryType != 'cd:gallery'">
+          <div class="flex flex-col gap-2">
+            <template v-for="childNode in contentNode.children">
+              <!-- ContentTypes -->
+              <UiCard
+                v-if="childNode.primaryType == 'cd:content'"
+                icon="fa-folder"
+                :key="childNode.id"
+                noTitleSeparator
+              >
+                <template #header>
+                  <i class="fa fa-folder text-primary text-xl p-3 pr-0"></i>
+                </template>
+                <template #title>
+                  <div class="flex gap-2 items-center">
+                    <NuxtLink
+                      class="text-primary hover:text-primary-100"
+                      :to="childNode.path"
+                      >{{
+                        childNode.properties["cd:title"]?.value ||
+                        childNode.webName
+                      }}</NuxtLink
+                    >
+                  </div>
+                </template>
+                <template #sub-title>
+                  <div class="">
+                    {{ childNode.properties["jcr:createdBy"]?.value }}
+                  </div>
+                </template>
+                <template #body>
+                  <div class="">
+                    {{ childNode.properties["cd:description"]?.value }}
+                  </div>
+                </template>
+              </UiCard>
+              <!--End ContentTypes -->
+              <!--FileTypes -->
+              <UiCard
+                v-if="childNode.primaryType == 'pa:file'"
+                icon="fa-folder"
+                :key="childNode.id"
+                noTitleSeparator
+              >
+                <template #header>
+                  <i class="fa fa-file text-primary text-xl p-3 pr-0"></i>
+                </template>
+                <template #title>
+                  <div class="flex gap-2 items-center">
+                    <NuxtLink
+                      class="text-primary hover:text-primary-100"
+                      :to="childNode.path"
+                      >{{
+                        childNode.properties["cd:title"]?.value ||
+                        childNode.webName
+                      }}</NuxtLink
+                    >
+                  </div>
+                </template>
+                <template #sub-title>
+                  <div class="p-2">
+                    {{ childNode.properties["jcr:createdBy"]?.value }}
+                  </div>
+                </template>
+                <template #body>
+                  <div class="p-2">
+                    {{ childNode.properties["cd:description"]?.value }}
+                  </div>
+                </template>
+              </UiCard>
+              <!-- End FileTypes -->
+              <!-- Gallery type -->
+              <SharedGallery
+                v-if="childNode.primaryType == 'cd:gallery'"
+                :galleryNode="childNode"
+                :key="childNode.id"
+                displayAs="card"
+              ></SharedGallery>
+              <!-- End Gallery type -->
+            </template>
+          </div>
+        </div>
+        <!-- End Children list -->
       </div>
       <div v-else>
         <div class="animation-spin">

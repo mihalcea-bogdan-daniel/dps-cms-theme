@@ -1,63 +1,11 @@
 <template>
   <div>
     <NuxtLayout name="default" :featuredImage="false">
-      <template #hero>
+      <template #hero="{contentNode, pending}">
         <div class="col-span-12 block">
+        <!-- <pre>{{ contentNode }}</pre> -->
           <UiCard class="mb-4" horizontal>
             <template #header>
-              <div>
-                <Flicking
-                  :options="{ align: 'center', circular: true }"
-                  :plugins="plugins"
-                >
-                  <div :key="1">
-                    <Image
-                      indicatorIcon="fa fa-magnifying-glass text-slate-100"
-                      src="https://primefaces.org/cdn/primevue/images/galleria/galleria1.jpg"
-                      preview
-                      width="500"
-                    ></Image>
-                  </div>
-                  <div :key="2">
-                    <Image
-                      indicatorIcon="fa fa-magnifying-glass text-slate-100"
-                      src="https://primefaces.org/cdn/primevue/images/galleria/galleria2.jpg"
-                      preview
-                      width="500"
-                    ></Image>
-                  </div>
-                  <div :key="3">
-                    <Image
-                      indicatorIcon="fa fa-magnifying-glass text-slate-100"
-                      src="https://primefaces.org/cdn/primevue/images/galleria/galleria3.jpg"
-                      preview
-                      width="500"
-                    ></Image>
-                  </div>
-                  <div :key="4">
-                    <Image
-                      indicatorIcon="fa fa-magnifying-glass text-slate-100"
-                      src="https://primefaces.org/cdn/primevue/images/galleria/galleria4.jpg"
-                      preview
-                      width="500"
-                    ></Image>
-                  </div>
-                  <div :key="5">
-                    <Image
-                      indicatorIcon="fa fa-magnifying-glass text-slate-100"
-                      src="https://primefaces.org/cdn/primevue/images/galleria/galleria4.jpg"
-                      preview
-                      width="500"
-                    ></Image>
-                  </div>
-                  <template #viewport>
-                    <!-- <span class="flicking-arrow-prev"></span> -->
-                    <!-- <span class="flicking-arrow-next"></span> -->
-                    <!-- <i class="cms-prev-image fa fa-chevron-left"></i> -->
-                    <div class="flicking-pagination"></div>
-                  </template>
-                </Flicking>
-              </div>
             </template>
             <template #body>
               <div>
@@ -80,21 +28,31 @@
 </template>
 
 <script setup lang="ts">
-import "@egjs/flicking-plugins/dist/arrow.css";
-// import "@egjs/flicking-plugins/dist/pagination.css";
-import CMSImage from '../components/ui/CMSImage.vue';
-import Flicking from "@egjs/vue3-flicking";
+//import "@egjs/flicking-plugins/dist/arrow.css";
+//import "@egjs/flicking-plugins/dist/pagination.css";
+import CMSImage from "../components/ui/CMSImage.vue";
+import Flicking, { ChangedEvent, FlickingEvents, ReadyEvent } from "@egjs/vue3-flicking";
 import { Arrow, Pagination } from "@egjs/flicking-plugins";
 
+const flicking: Ref<Flicking | undefined> = ref();
+
+const handlePanelChange = (e: ChangedEvent) => {
+  console.log(e.currentTarget);
+
+};
+const flickingReady = (e: ReadyEvent) => {
+  console.log(e.currentTarget.index);
+};
+
 const renderBullet = (className: string) => {
-  return `<i class="fa fa-circle  text-white ${className}"></i>`;
+  return `<i class="fa fa-circle text-white ${className}"></i>`;
 };
 
 const renderActiveBullet = (className: string) => {
   return `<i class="fa-duotone fa-circle-dot  ${className}" style="--fa-primary-color: #2e70ea; --fa-secondary-color: #ffffff; --fa-secondary-opacity: 1;"></i>`;
 };
 const plugins = [
-  // new Arrow({ prevElSelector: ".cms-prev-image" }),
+  // new Arrow(),
   new Pagination({
     type: "bullet",
     renderBullet: renderBullet,

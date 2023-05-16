@@ -3,7 +3,7 @@
     <template #featured-image>
       <h1 class="title">Contact</h1>
     </template>
-    <!-- <template> -->
+    <h2 class="title">Contact rapid</h2>
     <VForm
       :validationSchema="schema"
       class="col-span-12 grid grid-cols-12 gap-2"
@@ -11,15 +11,18 @@
       @submit="handleFormSubmit"
     >
       <!-- categorie radio -->
-      <div class="col-span-12 flex items-center justify-start w-full gap-4">
-        <div class="flex gap-1 items-center">
-          <VField name="category" type="radio" value="Tea" id="tea" />
-          <label for="tea">Tea</label>
+      <div class="col-span-12">
+        <div class="flex items-center justify-start w-full gap-4">
+          <div class="flex gap-1 items-center">
+            <VField name="category" type="radio" value="Tea" id="tea" />
+            <label for="tea">Tea</label>
+          </div>
+          <div class="flex gap-1 items-center">
+            <VField name="category" type="radio" value="Coffee" id="coffee" />
+            <label for="coffee">Coffe</label>
+          </div>
         </div>
-        <div class="flex gap-1 items-center">
-          <VField name="category" type="radio" value="Coffee" id="coffee" />
-          <label for="coffee">Coffe</label>
-        </div>
+        <VErrorMessage class="cms-error" name="requestType"></VErrorMessage>
       </div>
       <!-- end categorie radio -->
       <!-- request type dropdown -->
@@ -148,19 +151,47 @@
           name="acceptConditions"
         ></VErrorMessage>
       </div>
-
       <button class="cms-btn" type="submit">Trimite</button>
     </VForm>
-    <!-- </template> -->
+    <template #sidebar>
+    <div class="flex flex-col gap-6">
+      <div>
+        <h2 class="title small mb-3">Program audiențe</h2>
+        <h4 class="small">Primar: Luni 9 <sup>00</sup> - 11 <sup>00</sup></h4>
+        <h4 class="small">
+          Viceprimar: Marți 9 <sup>00</sup> - 11 <sup>00</sup>
+        </h4>
+        <h4 class="small">
+          Secretar: Miercuri 9 <sup>00</sup> - 11 <sup>00</sup>
+        </h4>
+      </div>
+      <div>
+        <h2 class="title small mb-3">Program de lucru</h2>
+        <h4 class="small">Luni - Vineri 8<sup>00</sup> - 16 <sup>00</sup></h4>
+      </div>
+      <div>
+        <h2 class="title small mb-3">Date contact</h2>
+        <a href="tel: +40249 481 006">
+          <h4 class="small cms-link">Tel./Fax: 0249 481 006</h4>
+        </a>
+        <a type="email" href="mailto:contact@primaria-corbu.ro">
+          <h4 class="small cms-link">E-mail: contact@primaria-corbu.ro</h4>
+        </a>
+      </div>
+    </div>
+    </template>
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
 import { ToastServiceMethods } from "primevue/toastservice";
+import { SubmissionHandler } from "vee-validate";
 import * as yup from "yup";
 const config = useRuntimeConfig();
+const nuxtApp = useNuxtApp();
 
-const toast: ToastServiceMethods | undefined = inject("toast");
+const toast: ToastServiceMethods | undefined =
+  nuxtApp.vueApp.config.globalProperties.$toast;
 
 interface Data {
   email: string;
@@ -210,7 +241,7 @@ const schema = yup.object({
   firstName: yup.string().required(),
   lastName: yup.string().required(),
   message: yup.string().required(),
-  category: yup.string(),
+  category: yup.string().required(),
   requestType: yup.string().required(),
   acceptConditions: yup.boolean().required().isTrue(),
 });

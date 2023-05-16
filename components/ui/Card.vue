@@ -1,6 +1,6 @@
 <template>
   <div
-    class="cms-card"
+    class="cms-card relative"
     :class="[
       horizontal ? 'cms-card-horizontal' : '',
       noBackground ? 'bg-none border-none' : 'bg-white drop-shadow-md',
@@ -8,21 +8,17 @@
   >
     <div v-if="!hideHeader" class="relative">
       <slot name="header">
-        <!-- <img
-          src="https://images.unsplash.com/photo-1650989859642-dc988199807a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
-        /> -->
       </slot>
     </div>
-    <div class="flex flex-col justify-between h-full w-full">
-      <div class="flex flex-col h-full">
+    <div class="flex flex-col justify-between p-3">
+      <div class="flex flex-col flex-1">
         <div
           v-if="hasTitle"
           class="cms-card-title"
           :class="{ 'cms-card-title-separator': titleSeparatorClasses }"
         >
-          <div v-if="hasTitle">
-            <slot name="title"></slot>
-          </div>
+          <slot name="title"></slot>
+
           <div v-if="hasSubTitle" class="text-sm mt-1 text-gray-400">
             <slot name="sub-title"></slot>
           </div>

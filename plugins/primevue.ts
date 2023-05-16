@@ -11,9 +11,9 @@ import Image from "../components/ui/CMSImage.vue";
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(PrimeVue, { ripple: true });
   nuxtApp.vueApp.use(ToastService);
+  nuxtApp.vueApp.provide("toast", nuxtApp.vueApp.config.globalProperties.$toast);
 
   nuxtApp.vueApp.directive("focustrap", FocusTrap);
-  nuxtApp.vueApp.provide("toast", nuxtApp.vueApp.config.globalProperties.$toast);
   nuxtApp.vueApp.component("Button", Button);
   nuxtApp.vueApp.component("Carousel", Carousel);
   nuxtApp.vueApp.component("Dropdown", Dropdown);

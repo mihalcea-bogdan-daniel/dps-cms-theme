@@ -28,7 +28,17 @@
         @click="onMaskClick"
         @keydown="onMaskKeydown"
       >
-        <div class="p-image-toolbar">
+        <button @click.stop="nextImage">
+          <i
+            class="fa-thin fa fa-arrow-right text-[3rem] text-white absolute right-0 mr-6 z-10"
+          ></i>
+        </button>
+        <button @click.stop="prevImage">
+          <i
+            class="fa-thin fa fa-arrow-left text-[3rem] text-white absolute left-0 ml-6 z-10"
+          ></i>
+        </button>
+        <div class="flex absolute top-0 right-0 m-2 text-xl text-white gap-2">
           <button
             class="p-image-action p-link"
             @click="rotateRight"
@@ -36,7 +46,7 @@
             :aria-label="rightAriaLabel"
           >
             <slot name="refresh">
-              <i class="pi pi-refresh"></i>
+              <i class="fa fa-regular fa-rotate-right"></i>
             </slot>
           </button>
 
@@ -47,7 +57,7 @@
             :aria-label="leftAriaLabel"
           >
             <slot name="undo">
-              <i class="pi pi-undo"></i>
+              <i class="fa fa-regular fa-rotate-left"></i>
             </slot>
           </button>
 
@@ -59,7 +69,7 @@
             :aria-label="zoomOutAriaLabel"
           >
             <slot name="zoomout">
-              <i class="pi pi-search-minus"></i>
+              <i class="fa fa-regular fa-magnifying-glass-minus"></i>
             </slot>
           </button>
 
@@ -71,7 +81,7 @@
             :aria-label="zoomInAriaLabel"
           >
             <slot name="zoomin">
-              <i class="pi pi-search-plus"></i>
+              <i class="fa fa-regular fa-magnifying-glass-plus"></i>
             </slot>
           </button>
 
@@ -83,7 +93,7 @@
             autofocus
           >
             <slot name="close">
-              <i class="pi pi-times"></i>
+              <i class="fa fa-regular fa-times"></i>
             </slot>
           </button>
         </div>
@@ -102,7 +112,7 @@
               :style="imagePreviewStyle"
               @click="onPreviewImageClick"
             />
-            <template name="description"></template>
+            <slot name="description"></slot>
           </div>
         </transition>
       </div>
@@ -147,6 +157,10 @@ export default {
     indicatorIcon: {
       type: String,
       default: "fa fa-magnifying-glass",
+    },
+    totalImages: {
+      type: Number,
+      default: 1,
     },
   },
   mask: null,
@@ -222,6 +236,12 @@ export default {
     },
     zoomOut() {
       this.scale = this.scale - 0.1;
+      this.previewClick = true;
+    },
+    nextImage() {
+      this.previewClick = true;
+    },
+    prevImage() {
       this.previewClick = true;
     },
     onBeforeEnter() {

@@ -12,14 +12,18 @@ export default defineNuxtConfig({
     "@nuxt/content",
     "@nuxtjs/tailwindcss",
     "@vueuse/nuxt",
+    "@vee-validate/nuxt",
   ],
   build: {
-    transpile: ["primevue"]
+    transpile: ["primevue", "@vee-validate/rules", "@vee-validate/yup" ],
   },
   plugins: [
     {
       src: join(currentDir, "./plugins/primevue.ts"),
       mode: "client",
+    },
+    {
+      src: join(currentDir, "./plugins/veevalidate-rules.ts"),
     },
   ],
   css: [
@@ -31,6 +35,17 @@ export default defineNuxtConfig({
   // Optionally change the default prefix for headless.
   headlessui: {
     prefix: "Headless",
+  },
+  veeValidate: {
+    // disable or enable auto imports
+    autoImports: true,
+    // Use different names for components
+    componentNames: {
+      Form: "VForm",
+      Field: "VField",
+      FieldArray: "VFieldArray",
+      ErrorMessage: "VErrorMessage",
+    },
   },
   content: {
     sources: {

@@ -1,5 +1,5 @@
 <template>
-  <NuxtLayout>
+  <NuxtLayout static>
     <template #featured-image>
       <div v-if="error" class="text-primary">
         <h1 class="text-primary">{{ t(`error.error`) + ' ' + error.statusCode }}</h1>
