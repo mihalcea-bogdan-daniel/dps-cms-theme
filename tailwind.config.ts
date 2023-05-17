@@ -19,7 +19,7 @@ export default <Partial<Config>>{
         primary: {
           DEFAULT: "#2E71EA", // Primary default
           50: "#DCECFF", //Secondary-blue
-          100: "#BDD2F8", //Pastel blue
+          100: "#BDD2F8", //Pastel-blue
           200: "#B9CFF8",
           300: "#A6C3F6",
           400: "#98B7F0",

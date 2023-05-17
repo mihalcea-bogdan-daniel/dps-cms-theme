@@ -1,64 +1,68 @@
 <template>
   <div>
     <NuxtLayout name="default" :featuredImage="false">
-      <template #hero="{contentNode, pending}">
+      <template #hero="{ contentNode, pending }">
         <div class="col-span-12 block">
-        <!-- <pre>{{ contentNode }}</pre> -->
+          <!-- <pre>{{ contentNode }}</pre> -->
           <UiCard class="mb-4" horizontal>
-            <template #header>
+            <template #header v-if="galleryNode != undefined">
+              <SharedGallery
+                :galleryNode="galleryNode"
+                class="w-full flex-1"
+              ></SharedGallery>
             </template>
-            <template #body>
-              <div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Et
-                officiis vel assumenda facilis quos delectus voluptatem,
-                perspiciatis sapiente alias aut fugiat. Nostrum impedit facilis
-                aliquam eveniet ullam magnam fuga temporibus.
+            <template
+              #body
+              v-if="
+                heroContent && heroContent.properties['cd:formattedContent']
+              "
+            >
+              <div :class="{ 'max-w-md': galleryNode != undefined }">
+                <h1 class="title mb-4">
+                  {{ heroContent.properties["cd:title"].value }}
+                </h1>
+                <div
+                  v-html="heroContent.properties['cd:formattedContent'].value"
+                ></div>
               </div>
             </template>
           </UiCard>
         </div>
       </template>
-      <input class="" placeholder="Text input" type="text" />
-      <input class="" placeholder="Text input" type="number" />
-      <input class="" placeholder="Text input" type="date" />
-      <input class="" placeholder="Text input" type="email" />
       <div class="mb-4"></div>
     </NuxtLayout>
   </div>
 </template>
 
 <script setup lang="ts">
-//import "@egjs/flicking-plugins/dist/arrow.css";
-//import "@egjs/flicking-plugins/dist/pagination.css";
-import CMSImage from "../components/ui/CMSImage.vue";
-import Flicking, { ChangedEvent, FlickingEvents, ReadyEvent } from "@egjs/vue3-flicking";
-import { Arrow, Pagination } from "@egjs/flicking-plugins";
+import {
+  ContentNode,
+  ContentNodeResponse,
+} from "../types/ContentNode/ContentNode";
 
-const flicking: Ref<Flicking | undefined> = ref();
+const config = useRuntimeConfig();
+const route = useRoute();
+const { dpsCmsTheme } = useAppConfig();
+const heroContent: Ref<ContentNode | undefined> = ref();
+const homePageNode: Ref<ContentNode | undefined> = ref();
+const galleryNode: Ref<ContentNode | undefined> = ref();
 
-const handlePanelChange = (e: ChangedEvent) => {
-  console.log(e.currentTarget);
-
-};
-const flickingReady = (e: ReadyEvent) => {
-  console.log(e.currentTarget.index);
-};
-
-const renderBullet = (className: string) => {
-  return `<i class="fa fa-circle text-white ${className}"></i>`;
-};
-
-const renderActiveBullet = (className: string) => {
-  return `<i class="fa-duotone fa-circle-dot  ${className}" style="--fa-primary-color: #2e70ea; --fa-secondary-color: #ffffff; --fa-secondary-opacity: 1;"></i>`;
-};
-const plugins = [
-  // new Arrow(),
-  new Pagination({
-    type: "bullet",
-    renderBullet: renderBullet,
-    renderActiveBullet: renderActiveBullet,
-  }),
-];
+const { data, pending, error } = await useFetch<ContentNodeResponse>(
+  `/api/v1/web/${dpsCmsTheme.pageBlocksApiLocations.homepage}`,
+  {
+    baseURL: config.public.apiBase,
+    query: route.query,
+  }
+);
+if (!error.value) {
+  homePageNode.value = data.value?.contentNode;
+  heroContent.value = homePageNode.value?.children.find((ch) => {
+    return ch.webName == "hero-content";
+  });
+  galleryNode.value = heroContent.value?.children.find((ch) => {
+    return ch.primaryType == "cd:gallery";
+  });
+}
 </script>
 
 <style scoped lang="scss">

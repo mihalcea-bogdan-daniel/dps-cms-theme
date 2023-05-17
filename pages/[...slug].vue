@@ -135,7 +135,7 @@
     <!-- Paginare -->
     <template #pagination="{ totalPages, goToPageNumber }">
       <UiPagination
-        :totalPages="totalPages"
+        :totalPages="12"
         :goToPageNumber="goToPageNumber"
       ></UiPagination>
     </template>

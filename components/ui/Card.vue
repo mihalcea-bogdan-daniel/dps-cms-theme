@@ -6,11 +6,9 @@
       noBackground ? 'bg-none border-none' : 'bg-white drop-shadow-md',
     ]"
   >
-    <div v-if="!hideHeader" class="relative">
-      <slot name="header">
-      </slot>
-    </div>
-    <div class="flex flex-col justify-between p-3">
+    <slot v-if="!hideHeader" name="header"> </slot>
+
+    <div class="flex flex-col p-3">
       <div class="flex flex-col flex-1">
         <div
           v-if="hasTitle"

@@ -1,9 +1,10 @@
 <template>
-  <div v-if="!displayAs">
+  <template v-if="!displayAs">
     <Flicking
       :options="{ align: 'prev', circular: true, autoInit: true }"
       :plugins="plugins"
       :key="`gallery-${$.uid}`"
+      :class="$attrs.class"
       hideBeforeInit
     >
       <div
@@ -12,7 +13,7 @@
         @click="clickPanel"
         class="mx-1 my-auto"
       >
-        <img :src="image" draggable="false" width="200" class="rounded" />
+        <img :src="image" draggable="false" :width="`${previewImageWidth}`" class="rounded aspect-square object-cover object-center hover:brightness-200 transition-all duration-200" />
       </div>
       <template #viewport>
         <!-- <span class="flicking-arrow-prev"></span> -->
@@ -21,21 +22,18 @@
         <div class="flicking-pagination"></div>
       </template>
     </Flicking>
-  </div>
-  <div v-else-if="displayAs == 'grid'" class="grid grid-cols-2 sm:grid-cols-6 gap-2">
-    <template v-for="(image, index) in childImageNodeLinks">
-      <!-- <img :src="image" draggable="false" width="200" class="rounded" /> -->
+  </template>
+  <div
+    v-else-if="displayAs == 'grid'"
+    class="grid grid-cols-2 sm:grid-cols-6 gap-2"
+  >
+    <template v-for="(image) in childImageNodeLinks">
       <div
-        :style="{
-          background: `url('${image}')`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-          backgroundBlendMode: 'multiply',
-          backgroundPosition: 'center center',
-        }"
         class="pb-full rounded-md cursor-pointer"
         @click="maskVisible = true"
-      ></div>
+      >
+        <img :src="image" draggable="false" width="200" class="rounded object-cover aspect-square" />
+      </div>
     </template>
   </div>
   <div v-else-if="displayAs == 'card'">
@@ -48,20 +46,27 @@
           :src="childImageNodeLinks[0]"
           draggable="false"
           width="200"
-          class="rounded-l"
+          height="200"
+          class="max-h-48 max-w-48 object-cover object-center"
         />
       </template>
       <template #body>
-        <div class="flex items-start h-full flex-1 my-auto flex-col justify-center">
+        <div
+          class="flex items-start h-full flex-1 my-auto flex-col justify-center"
+        >
           <NuxtLink
             class="text-xl text-primary hover:text-primary-100"
             :to="galleryNode.path"
             >{{ galleryNode.webName }}</NuxtLink
           >
           <div class="flex gap-2 items-center">
-          <div class="text-sm mt-1 text-gray-400">{{ galleryNode.children.length + " " + t("view.images") }}</div>
-          <i class="fa fa-circle text-[5px] text-gray-400"></i>
-          <div class="text-sm mt-1 text-gray-400">{{ d(galleryNode.properties['jcr:created'].value) }}</div>
+            <div class="text-sm mt-1 text-gray-400">
+              {{ galleryNode.children.length + " " + t("view.images") }}
+            </div>
+            <i class="fa fa-circle text-[5px] text-gray-400"></i>
+            <div class="text-sm mt-1 text-gray-400">
+              {{ d(galleryNode.properties["jcr:created"].value) }}
+            </div>
           </div>
         </div>
       </template>
@@ -70,10 +75,10 @@
   <Portal appendTo="body">
     <div
       v-if="maskVisible"
-      class="fixed w-full h-full max-h-screen top-0 left-0 backdrop-blur bg-black bg-opacity-50 z-50 flex flex-col items-center justify-center"
+      class="fixed w-full h-full max-h-screen top-0 left-0 backdrop-blur bg-black bg-opacity-50 z-[60] flex flex-col items-center justify-center"
       @click="maskVisible = false"
     >
-      <div class="relative">
+      <div class="relative w-full">
         <Flicking
           class="full-screen-gallery relative"
           :key="`gallery-full-screen-${$.uid}`"
@@ -98,13 +103,22 @@
             class="p-2 my-auto max-h-screen"
             @click.stop
           >
-            <img :src="image" class="h-auto" draggable="false" width="800" />
+            <img :src="image" class="h-auto aspect-square" draggable="false" width="800" />
           </div>
           <template #viewport>
-            <span @click.stop class="fa fa-thin fa-arrow-left text-white gallery-prev-arrow absolute bottom-1/2 left-0 translate-y-1/2 text-[3em] p-6 hover:bg-white hover:bg-opacity-20 cursor-pointer z-[70]"></span>
-            <span @click.stop class="fa fa-thin fa-arrow-right text-white gallery-next-arrow absolute bottom-1/2 right-0 translate-y-1/2 text-[3em] p-6 hover:bg-white hover:bg-opacity-20 cursor-pointer z-[70]"></span>
+            <span
+              @click.stop
+              class="fa fa-thin fa-arrow-left text-white gallery-prev-arrow absolute bottom-1/2 left-0 translate-y-1/2 text-[3em] p-6 hover:bg-white hover:bg-opacity-20 cursor-pointer z-[70]"
+            ></span>
+            <span
+              @click.stop
+              class="fa fa-thin fa-arrow-right text-white gallery-next-arrow absolute bottom-1/2 right-0 translate-y-1/2 text-[3em] p-6 hover:bg-white hover:bg-opacity-20 cursor-pointer z-[70]"
+            ></span>
             <!-- <i class="cms-prev-image fa fa-chevron-left"></i> -->
-            <div @click.stop class="flicking-pagination-full-screen absolute"></div>
+            <div
+              @click.stop
+              class="flicking-pagination-full-screen absolute"
+            ></div>
           </template>
         </Flicking>
       </div>
@@ -129,8 +143,9 @@ type DisplayVariants = "card" | "grid";
 interface GalleryProps {
   galleryNode: ContentNode;
   displayAs?: DisplayVariants;
+  previewImageWidth?: number
 }
-const props = defineProps<GalleryProps>();
+const props = withDefaults(defineProps<GalleryProps>(), {previewImageWidth: 400});
 console.log(props.galleryNode);
 
 const maskVisible = ref(false);
@@ -161,7 +176,10 @@ const pluginsFulLScreen = [
     renderBullet: renderBullet,
     renderActiveBullet: renderActiveBullet,
   }),
-  new Arrow({prevElSelector: ".gallery-prev-arrow", nextElSelector: ".gallery-next-arrow"})
+  new Arrow({
+    prevElSelector: ".gallery-prev-arrow",
+    nextElSelector: ".gallery-next-arrow",
+  }),
 ];
 
 const childImageNodeLinks: ComputedRef<string[] | undefined> = computed(() => {

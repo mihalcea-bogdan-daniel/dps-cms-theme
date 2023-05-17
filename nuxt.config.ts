@@ -3,7 +3,6 @@ import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
-
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   modules: [
@@ -45,16 +44,6 @@ export default defineNuxtConfig({
       Field: "VField",
       FieldArray: "VFieldArray",
       ErrorMessage: "VErrorMessage",
-    },
-  },
-  content: {
-    sources: {
-      // overwrite default source AKA `content` directory
-      content: {
-        driver: "fs",
-        prefix: "/content", // All contents inside this source will be prefixed with `/docs`
-        base: join(currentDir, "/pages/content"),
-      },
     },
   },
 });
