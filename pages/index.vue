@@ -2,7 +2,7 @@
   <div>
     <NuxtLayout name="default" :featuredImage="false">
       <template #hero="{ contentNode, pending }">
-        <div class="col-span-12 block">
+        <div v-if="galleryNode" class="col-span-12 block">
           <!-- <pre>{{ contentNode }}</pre> -->
           <UiCard class="mb-4" horizontal>
             <template #header v-if="galleryNode != undefined">
@@ -19,10 +19,10 @@
             >
               <div :class="{ 'max-w-md': galleryNode != undefined }">
                 <h1 class="title mb-4">
-                  {{ heroContent.properties["cd:title"].value }}
+                  {{ heroContent.properties["cd:title"].string }}
                 </h1>
                 <div
-                  v-html="heroContent.properties['cd:formattedContent'].value"
+                  v-html="heroContent.properties['cd:formattedContent'].string"
                 ></div>
               </div>
             </template>

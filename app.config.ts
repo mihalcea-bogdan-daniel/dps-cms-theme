@@ -4,31 +4,33 @@ export default defineAppConfig({
     pageBlocksApiLocations: {
       footer: {
         path: "sections/footer",
-        content:"sections/footer/content",
+        content: "sections/footer/content",
         copyright: "sections/footer/copyright",
-        "footer-menu": "sections/footer/footer-menu",
       },
       sidebar: "sections/sidebar",
       homepage: "sections/homepage",
-      header: "sections/header",
+      header: {
+        path: "sections/header",
+        contact: "sections/header/contact",
         menu: "sections/header/menu",
+      },
     },
   },
 });
 
-
-
 interface PageBlocksDefaultLocationConfig {
   footer: {
-    path: string,
-    content: string,
-    copyright: string,
-    "footer-menu": string,
+    path: string;
+    content: string;
+    copyright: string;
   };
   sidebar: string;
-  menu: string;
   homepage: string;
-  header: string;
+  header: {
+    path: string;
+    contact: string;
+    menu: string;
+  };
 }
 
 declare module "@nuxt/schema" {

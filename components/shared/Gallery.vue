@@ -13,7 +13,12 @@
         @click="clickPanel"
         class="mx-1 my-auto"
       >
-        <img :src="image" draggable="false" :width="`${previewImageWidth}`" class="rounded aspect-square object-cover object-center hover:brightness-200 transition-all duration-200" />
+        <img
+          :src="image"
+          draggable="false"
+          :width="`${previewImageWidth}`"
+          class="rounded aspect-square object-cover object-center hover:brightness-200 transition-all duration-200"
+        />
       </div>
       <template #viewport>
         <!-- <span class="flicking-arrow-prev"></span> -->
@@ -27,12 +32,17 @@
     v-else-if="displayAs == 'grid'"
     class="grid grid-cols-2 sm:grid-cols-6 gap-2"
   >
-    <template v-for="(image) in childImageNodeLinks">
+    <template v-for="image in childImageNodeLinks">
       <div
         class="pb-full rounded-md cursor-pointer"
         @click="maskVisible = true"
       >
-        <img :src="image" draggable="false" width="200" class="rounded object-cover aspect-square" />
+        <img
+          :src="image"
+          draggable="false"
+          width="200"
+          class="rounded object-cover aspect-square"
+        />
       </div>
     </template>
   </div>
@@ -64,8 +74,11 @@
               {{ galleryNode.children.length + " " + t("view.images") }}
             </div>
             <i class="fa fa-circle text-[5px] text-gray-400"></i>
-            <div class="text-sm mt-1 text-gray-400">
-              {{ d(galleryNode.properties["jcr:created"].value) }}
+            <div
+              class="text-sm mt-1 text-gray-400"
+              v-if="galleryNode.properties['cd:publishingDate']"
+            >
+              {{ d(galleryNode.properties["cd:publishingDate"].date) }}
             </div>
           </div>
         </div>
@@ -103,7 +116,12 @@
             class="p-2 my-auto max-h-screen"
             @click.stop
           >
-            <img :src="image" class="h-auto aspect-square" draggable="false" width="800" />
+            <img
+              :src="image"
+              class="h-auto aspect-square"
+              draggable="false"
+              width="800"
+            />
           </div>
           <template #viewport>
             <span
@@ -143,10 +161,11 @@ type DisplayVariants = "card" | "grid";
 interface GalleryProps {
   galleryNode: ContentNode;
   displayAs?: DisplayVariants;
-  previewImageWidth?: number
+  previewImageWidth?: number;
 }
-const props = withDefaults(defineProps<GalleryProps>(), {previewImageWidth: 400});
-console.log(props.galleryNode);
+const props = withDefaults(defineProps<GalleryProps>(), {
+  previewImageWidth: 400,
+});
 
 const maskVisible = ref(false);
 const clickPanel = (e: Event) => {

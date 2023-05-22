@@ -2,8 +2,8 @@
 <template>
   <div
   class="col-span-12"
-    v-if="sidebarContentNode"
-    v-html="sidebarContentNode.properties['cd:formattedContent']?.value"
+    v-if="sidebarContentNode && sidebarContentNode.properties['cd:formattedContent']?.string"
+    v-html="sidebarContentNode.properties['cd:formattedContent']?.string"
   />
 </template>
 

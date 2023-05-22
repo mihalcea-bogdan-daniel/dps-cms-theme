@@ -8,6 +8,16 @@ export interface CdProperties {
   nameString: string;
 }
 
+export interface CdDateProperties {
+  name: string;
+  date: number;
+  type: number;
+  protectedProperty: boolean;
+  boolean: boolean;
+  string: string;
+  nameString: string;
+}
+
 export enum PrimaryType {
   ARTICLE = "cd:contentModule",
   CATEGORY = "cd:content",
@@ -15,7 +25,8 @@ export enum PrimaryType {
   MO_FOLDER = "pa:moFolder",
   FILE = "pa:file",
   RESOURCE = "pa:resource",
-  GALLERY = "cd:gallery"
+  GALLERY = "cd:gallery",
+  SECTION = "cd:section"
 }
 
 export interface ContentNode<GenericProps = CdProperties> {
@@ -43,9 +54,10 @@ export interface ContentNode<GenericProps = CdProperties> {
     "cd:language"?: GenericProps;
     "cd:commentsEnabled"?: GenericProps;
     "cd:formattedContent"?: GenericProps;
+    "cd:archivationDate"?: CdDateProperties;
+    "cd:publishingDate"?: CdDateProperties;
   }; // TODO vezi web-content/node-types - cele de acolo sunt garantate
   children: ContentNode[];
-  parent: ContentNode;
   childrenMap: {
     [key: string]: ContentNode;
   };

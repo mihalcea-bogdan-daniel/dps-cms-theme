@@ -1,7 +1,8 @@
 <template>
-  <div class="flex relative h-full items-center gap-8 border-b border-secondary-black">
+  <div
+    class="flex relative h-full items-center gap-8 border-b border-secondary-black"
+  >
     <Menu
-      v-slot="{ open }"
       as="div"
       v-for="menuItem in menuItems"
       :key="menuItem.path"
@@ -10,29 +11,44 @@
       <MenuButton
         v-if="menuItem.children == undefined || menuItem.children.length == 0"
         as="template"
+        @mouseenter="handleMenuEnter(menuItem.path)"
       >
         <NuxtLink
           :to="menuItem.path"
           class="no-underline flex items-center box-content h-full border-primary hover:border-b-4 hover:text-primary outline-none focus:text-primary-100"
-          >{{ menuItem.label }}</NuxtLink
-        >
+          >{{ menuItem.label }}
+        </NuxtLink>
       </MenuButton>
       <MenuButton
         v-else
         as="div"
         class="h-full flex box-content border-primary hover:border-b-4"
-        :class="{ 'border-b-4 text-primary': open }"
+        :class="{
+          'border-b-4 text-primary': activeMenuItemPath == menuItem.path,
+        }"
       >
-        <div class="flex gap-3 items-center hover:text-primary">
-          <button class="outline-none focus:text-primary">
+        <div
+          class="flex gap-3 items-center hover:text-primary"
+          @mouseenter="handleMenuEnter(menuItem.path)"
+        >
+          <!-- <button class="outline-none focus:text-primary">
             {{ menuItem.label }}
-          </button>
-          <i class="fa fa-caret-down"></i>
+          </button> -->
+          <NuxtLink :to="menuItem.path" class="outline-none focus:text-primary">
+            {{ menuItem.label }}
+          </NuxtLink>
+          <i class="fa fa-caret-down hover:cursor-pointer"></i>
         </div>
       </MenuButton>
       <MenuItems
+        static
         class="absolute bg-white drop-shadow-md p-2 rounded-b-md rounded-r-md flex flex-col outline-none z-50"
-        v-if="menuItem.children != undefined && menuItem.children.length > 0"
+        v-if="
+          menuItem.children != undefined &&
+          menuItem.children.length > 0 &&
+          activeMenuItemPath == menuItem.path
+        "
+        @mouseleave="handleMenuLeave"
       >
         <MenuItem
           v-for="menuSubItem in menuItem.children"
@@ -91,6 +107,7 @@ interface NavigationMenuProps {
 }
 const props = defineProps<NavigationMenuProps>();
 
+
 const menuItems: ComputedRef<IMenuItem[]> = computed(() => {
   if (props.contentNode) {
     return extractMenuItems(props.contentNode.children);
@@ -98,6 +115,14 @@ const menuItems: ComputedRef<IMenuItem[]> = computed(() => {
     return [];
   }
 });
+console.log(menuItems);
+const activeMenuItemPath: Ref<string | undefined> = ref();
+const handleMenuEnter = (path: string) => {
+  activeMenuItemPath.value = path;
+};
+const handleMenuLeave = () => {
+  activeMenuItemPath.value = undefined;
+};
 </script>
 
 <style scoped></style>

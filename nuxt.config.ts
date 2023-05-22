@@ -12,9 +12,10 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@vueuse/nuxt",
     "@vee-validate/nuxt",
+    "nuxt-multi-cache",
   ],
   build: {
-    transpile: ["primevue", "@vee-validate/rules", "@vee-validate/yup" ],
+    transpile: ["primevue", "@vee-validate/rules", "@vee-validate/yup"],
   },
   plugins: [
     {
@@ -30,6 +31,7 @@ export default defineNuxtConfig({
     join(currentDir, "./assets/fontawesome/css/all.css"),
     join(currentDir, "./assets/cms-components.scss"),
     join(currentDir, "/node_modules/primevue/resources/primevue.min.css"),
+    join(currentDir, "/node_modules/primeicons/primeicons.css"),
   ],
   // Optionally change the default prefix for headless.
   headlessui: {
@@ -44,6 +46,11 @@ export default defineNuxtConfig({
       Field: "VField",
       FieldArray: "VFieldArray",
       ErrorMessage: "VErrorMessage",
+    },
+  },
+  runtimeConfig: {
+    public: {
+      currentDir: currentDir,
     },
   },
 });

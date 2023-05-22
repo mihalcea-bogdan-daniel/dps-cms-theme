@@ -185,7 +185,7 @@
 
 <script setup lang="ts">
 import { ToastServiceMethods } from "primevue/toastservice";
-import { SubmissionHandler } from "vee-validate";
+
 import * as yup from "yup";
 const config = useRuntimeConfig();
 const nuxtApp = useNuxtApp();

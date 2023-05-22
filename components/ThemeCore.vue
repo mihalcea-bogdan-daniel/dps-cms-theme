@@ -66,8 +66,8 @@ const hasFormattedContent = computed(() => {
   if (
     props.contentNode !== undefined &&
     props.contentNode.properties["cd:formattedContent"] &&
-    props.contentNode.properties["cd:formattedContent"].value != "" &&
-    props.contentNode.properties["cd:formattedContent"].value != undefined
+    props.contentNode.properties["cd:formattedContent"].string != "" &&
+    props.contentNode.properties["cd:formattedContent"].string != undefined
   ) {
     return true;
   } else {

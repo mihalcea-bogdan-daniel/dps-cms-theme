@@ -17,7 +17,7 @@ export function extractMenuItems(contentNodes: ContentNode[]): IMenuItem[] {
       if (![PrimaryType.FILE, PrimaryType.RESOURCE].includes(cn.primaryType)) {
         // level 1
         menuItems.push({
-          label: cn.properties["cd:title"]?.value,
+          label: cn.properties["cd:title"]?.string,
           path: cn.path,
           link: cn.path,
           children: cn.children
@@ -31,7 +31,7 @@ export function extractMenuItems(contentNodes: ContentNode[]): IMenuItem[] {
                 // level 2
                 .map((ch) => {
                   return {
-                    label: ch.properties["cd:title"]?.value,
+                    label: ch.properties["cd:title"]?.string,
                     path: ch.path,
                     link: ch.path,
                     // level 3
