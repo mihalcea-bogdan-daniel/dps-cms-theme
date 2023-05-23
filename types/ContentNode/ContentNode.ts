@@ -23,7 +23,7 @@ export enum PrimaryType {
   CATEGORY = "cd:content",
   UNSTRUCTURED = "nt:unstructured",
   MO_FOLDER = "pa:moFolder",
-  FILE = "pa:file",
+  FILE = "cd:file",
   RESOURCE = "pa:resource",
   GALLERY = "cd:gallery",
   SECTION = "cd:section"
@@ -71,12 +71,6 @@ export interface ContentNode<GenericProps = CdProperties> {
 export interface ContentNodeResponse {
   contentNode: ContentNode;
   items: ContentNode[];
+  totalPages: number;
 }
 
-// export const TypeMap: { [key in PrimaryType]: string } = {
-//   "cd:contentModule": "CMSArticle",
-//   "cd:content": "CMSContainer",
-//   "nt:unstructured": "CMSContainer", // TODO Default - urmeaza sa se modifice
-//   "pa:moFolder": "CMSContainer",
-//   "pa:file": "CMSContainer",
-// };

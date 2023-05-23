@@ -118,7 +118,7 @@
           >
             <img
               :src="image"
-              class="h-auto aspect-square"
+              class="h-auto aspect-square object-cover object-center"
               draggable="false"
               width="800"
             />

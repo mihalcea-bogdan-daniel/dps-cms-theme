@@ -115,7 +115,7 @@ const menuItems: ComputedRef<IMenuItem[]> = computed(() => {
     return [];
   }
 });
-console.log(menuItems);
+
 const activeMenuItemPath: Ref<string | undefined> = ref();
 const handleMenuEnter = (path: string) => {
   activeMenuItemPath.value = path;

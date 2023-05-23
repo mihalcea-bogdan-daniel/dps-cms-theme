@@ -3,14 +3,19 @@
     class="flex justify-center my-3 items-center"
     v-if="totalPages && totalPages > 1"
   >
-    <button
-      type="button"
-      class="border border-black-400 rounded-l w-24 -m-[1px]"
-      :disabled="!prevButtonEnabled"
-      @click="handlePrevPageClick"
+    <NuxtLink
+      class="border border-black-400 rounded-l w-24 -m-[1px] text-center text-black hover:text-black"
+      :class="{ disabled: !prevButtonEnabled }"
+      :to="{
+        path: route.path,
+        query: {
+          page: String(currentPage ? currentPage - 1 : 0),
+          ...queryWithoutPage,
+        },
+      }"
     >
       {{ t("view.pagination.prev") }}
-    </button>
+    </NuxtLink>
     <NuxtLink
       prefetch
       v-for="page in generatePagination(
@@ -31,14 +36,19 @@
       >{{ page }}</NuxtLink
     >
 
-    <button
-      type="button"
-      class="border border-black-400 rounded-r -m-[1px] w-24"
-      @click="handleNextPageClick"
-      :disabled="nextButtonEnabled"
+    <NuxtLink
+      class="border border-black-400 rounded-r -m-[1px] w-24 text-black text-center hover:text-black"
+      :class="{ disabled: nextButtonEnabled }"
+      :to="{
+        path: route.path,
+        query: {
+          page: String(currentPage ? currentPage + 1 : 1),
+          ...queryWithoutPage,
+        },
+      }"
     >
       {{ t("view.pagination.next") }}
-    </button>
+    </NuxtLink>
   </div>
 </template>
 
@@ -69,25 +79,6 @@ const nextButtonEnabled = computed(() => {
   if (route.query.page == String(props.totalPages - 1)) return true;
   return false;
 });
-
-const handleNextPageClick = () => {
-  router.push({
-    path: route.path,
-    query: {
-      page: String(currentPage ? currentPage + 1 : 1),
-      ...queryWithoutPage.value,
-    },
-  });
-};
-const handlePrevPageClick = () => {
-  router.push({
-    path: route.path,
-    query: {
-      page: String(currentPage ? currentPage - 1 : 0),
-      ...queryWithoutPage.value,
-    },
-  });
-};
 
 function generatePagination(totalPages: number, currentPage: number) {
   const pageRange = 2; // Number of pages to display before and after the current page
@@ -121,6 +112,9 @@ function generatePagination(totalPages: number, currentPage: number) {
 .page-item {
   @apply text-black border border-black-400 w-7 text-center;
   margin: -1px;
+  &.disabled {
+    @apply pointer-events-none text-black-300;
+  }
   &.active-page-item {
     @apply text-white font-bold bg-primary border-y-primary;
   }

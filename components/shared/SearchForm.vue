@@ -2,7 +2,7 @@
   <form action="/search">
     <div class="relative">
       <input
-        name="search"
+        name="text"
         class="px-2"
         type="text"
         placeholder="Căutare"
@@ -23,8 +23,8 @@ const route = useRoute();
 const searchInput: Ref<HTMLInputElement | undefined> = ref();
 const val: Ref<string|undefined> = ref("")
 onMounted(() => {
-  if (route.query.search && searchInput.value) {
-    searchInput.value.value = route.query.search as string;
+  if (route.query.text && searchInput.value) {
+    searchInput.value.value = route.query.text as string;
     val.value = searchInput.value.value;
   }
 });

@@ -96,3 +96,10 @@ label {
     @apply text-sm;
   }
 }
+
+a {
+  @apply text-primary hover:text-primary-700 hover:underline hover:cursor-pointer;
+  &.disabled {
+    @apply pointer-events-none text-black-300 cursor-default;
+  }
+}

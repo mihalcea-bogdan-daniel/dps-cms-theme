@@ -72,8 +72,11 @@
                   </div>
                 </template>
                 <template #sub-title>
-                  <div class="">
-                    {{ childNode.properties["jcr:createdBy"]?.string }}
+                  <div class="flex gap-2 items-center">
+                    {{ t("view.lastPublishedDate") }}:
+                    <div>
+                      {{ d(childNode.properties["cd:publishingDate"].date) }}
+                    </div>
                   </div>
                 </template>
                 <template #body>
@@ -85,7 +88,7 @@
               <!--End ContentTypes -->
               <!--FileTypes -->
               <UiCard
-                v-if="childNode.primaryType == 'pa:file'"
+                v-if="childNode.primaryType == 'cd:file'"
                 :key="childNode.id"
                 noTitleSeparator
               >
@@ -167,6 +170,7 @@
       ></UiPagination>
     </template>
     <!-- End Paginare -->
+    <!-- Sidebar -->
     <template #sidebar>
       <div v-if="parentNode && !pendingSidebar && parentNode.contentNode">
         <h2 class="small title">{{ t("view.sidebar.relatedContent") }}</h2>
@@ -190,7 +194,7 @@
         </template>
       </div>
     </template>
-
+    <!-- End Sidebar -->
   </NuxtLayout>
 </template>
 <script setup lang="ts">
@@ -199,14 +203,14 @@ import {
   ContentNodeResponse,
 } from "../types/ContentNode/ContentNode";
 import { stripWebFromUrl, mimeTypeIcon } from "../utils/contentNodeUtils";
-const { t } = useI18n();
+const { t, d } = useI18n();
 const config = useRuntimeConfig();
 const route = useRoute();
 
 const { data: parentNode, pending: pendingSidebar } =
   await useFetch<ContentNodeResponse>(
     `/api/v1${route.path.split("/").slice(0, -1).join("/")}`,
-    { baseURL: config.public.apiBase}
+    { baseURL: config.public.apiBase }
   );
 
 const featuredImageNode = (contentNode: ContentNode) => {

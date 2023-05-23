@@ -28,7 +28,7 @@ export default defineNuxtConfig({
   ],
   css: [
     // because of the docs https://nuxt.com/docs/guide/going-further/layers#relative-paths-and-aliases
-    join(currentDir, "./assets/fontawesome/css/all.css"),
+    join(currentDir, "./assets/fontawesome/css/all.min.css"),
     join(currentDir, "./assets/cms-components.scss"),
     join(currentDir, "/node_modules/primevue/resources/primevue.min.css"),
     join(currentDir, "/node_modules/primeicons/primeicons.css"),
